@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import BuyForm from './BuyForm';
 
 
-export default function Portfolio({ coins, purchaseCoin }) {
+export default function Portfolio({ coins, userMoney, purchaseCoin }) {
     const navigate = useNavigate();
     const [tradeHappening, setTradeHappening] = useState(false);
     const [buy, setBuy] = useState(false);
@@ -24,6 +24,7 @@ export default function Portfolio({ coins, purchaseCoin }) {
             {buy &&
                 <BuyForm
                     setBuy={setBuy}
+                    userMoney={userMoney}
                     trade={setTradeHappening}
                     purchaseCoin={purchaseCoin}
                     coins={coins}
