@@ -1,0 +1,9 @@
+.Coin-card {
+    width: 100px;
+    display: flex;
+    Flex-direction: column;
+}
+
+.Coin-card img {
+    width: 100%;
+}
