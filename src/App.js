@@ -28,6 +28,11 @@ function App() {
   }
 
 
+  function purchaseCoin(e) {
+    e.preventDefault();
+    alert('you purchased a coin')
+  }
+
   // on page load, grab crypto data from API
   useEffect(() => {
     axios({
@@ -60,7 +65,7 @@ function App() {
           />
         } />
         <Route path="/portfolio" element={<Portfolio
-        
+          purchaseCoin={purchaseCoin}
           coins={coins}
         />} />
       </Routes>
