@@ -1,4 +1,4 @@
 .CoinList-container {
-    display: flex;
-    align-items: flex-end;
+    height: 200px;
+    overflow: hidden;
 }

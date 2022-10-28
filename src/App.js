@@ -1,15 +1,34 @@
+// modules
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-
+// components
 import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Portfolio from './components/Portfolio';
+// stylesheets
 import './App.css';
-import CoinList from './components/CoinList';
 
 function App() {
-  const [isLoggedIn, setIsloggedIn] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isVerified, setIsVerified] = useState(false);
+  const [userPortfolio, setUserPortfolio] = useState([]);
+  const [userMoney, setUserMoney] = useState(0)
   const [coins, setCoins] = useState([]);
 
+  // temporary function for logging in and out to view different layouts and initializing user money
+  function handleLogIn() {
+    setIsLoggedIn(!isLoggedIn);
+    setUserMoney(10000);
+  }
+
+  function displayUserInfo() {
+    console.log(userMoney);
+    console.log(userPortfolio)
+  }
+
+
+  // on page load, grab crypto data from API
   useEffect(() => {
     axios({
       url: "https://api.coingecko.com/api/v3/coins/markets",
@@ -27,8 +46,24 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <CoinList coins={coins} />
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        handleLogIn={handleLogIn}
+      />
+      <Routes>
+        <Route path="/" element={
+          <Home
+            coins={coins}
+            userMoney={userMoney}
+            isLoggedIn={isLoggedIn}
+            displayUserInfo={displayUserInfo}
+          />
+        } />
+        <Route path="/portfolio" element={<Portfolio
+        
+          coins={coins}
+        />} />
+      </Routes>
     </div>
   );
 }

@@ -1,3 +1,8 @@
+.Coin-container {
+    display: inline-block;
+    padding: 20px;
+}
+
 .Coin-card {
     width: 100px;
     display: flex;
