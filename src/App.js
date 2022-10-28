@@ -41,7 +41,7 @@ function App() {
       if (userCoins.some(x => x.short === purchasedCoin.symbol)) {
         const updatedCoins = userCoins.map((coin) => {
           if (coin.short === purchasedCoin.symbol) {
-            const newCoinObject = {name: coin.name, short: coin.short, amt: (coin.amt + (purchaseAmt / purchasedCoin.current_price))}
+            const newCoinObject = { name: coin.name, short: coin.short, image: coin.image,  amt: (coin.amt + (purchaseAmt / purchasedCoin.current_price)) }
             return newCoinObject;
           } else {
             return coin;
@@ -50,7 +50,7 @@ function App() {
         setUserCoins(updatedCoins, console.log(userCoins))
       } else {
         // creates the coin object (code + amount, determined by how much they purchased divided by the current market value)
-        const coinObject = { name: purchasedCoin.name, short: purchasedCoin.symbol, amt: (purchaseAmt / purchasedCoin.current_price) }
+        const coinObject = { name: purchasedCoin.name, short: purchasedCoin.symbol, image: purchasedCoin.image, amt: (purchaseAmt / purchasedCoin.current_price) }
         // adds to new array which includes player's previous coins
         const updatedCoins = [...userCoins, coinObject]
         // updates player's coin wallet
@@ -92,6 +92,7 @@ function App() {
         } />
         <Route path="/portfolio" element={<Portfolio
           userMoney={userMoney}
+          userCoins={userCoins}
           purchaseCoin={purchaseCoin}
           coins={coins}
         />} />
@@ -99,7 +100,5 @@ function App() {
     </div>
   );
 }
-
-
 
 export default App;

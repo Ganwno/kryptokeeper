@@ -43,7 +43,7 @@ export default function BuyForm({ coins, userMoney, purchaseCoin, setBuy, trade 
                 </div>
             }
             {/*cancels the form and returns to Portfolio*/}
-            <button onClick={() => (setBuy(false), trade(false))}>Back</button>
+            <button onClick={() => (setBuy(false), trade(false))}>Cancel</button>
         </form>
     )
 }
