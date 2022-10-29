@@ -41,7 +41,7 @@ function App() {
       if (userCoins.some(x => x.short === purchasedCoin.symbol)) {
         const updatedCoins = userCoins.map((coin) => {
           if (coin.short === purchasedCoin.symbol) {
-            const newCoinObject = { name: coin.name, short: coin.short, image: coin.image,  amt: (coin.amt + (purchaseAmt / purchasedCoin.current_price)) }
+            const newCoinObject = { name: coin.name, short: coin.short, image: coin.image, amt: (coin.amt + (purchaseAmt / purchasedCoin.current_price)) }
             return newCoinObject;
           } else {
             return coin;
@@ -56,6 +56,30 @@ function App() {
         // updates player's coin wallet
         setUserCoins(updatedCoins, console.log(userCoins))
       }
+    }
+  }
+
+  function sellCoin(sellAmt, soldCoin) {
+    const coinPrice = coins[coins.findIndex((coin => coin.name === soldCoin.name))].current_price;
+    const userCoinIndex = userCoins.findIndex((coin) => coin.name === soldCoin.name);
+    const amtSoldCoin = sellAmt / coinPrice;
+    if (sellAmt > userCoins[userCoinIndex].amt * coinPrice) {
+      alert('You have insufficient coins to sell')
+    } else {
+      setUserMoney(userMoney + parseInt(sellAmt));
+
+      const updatedCoins = userCoins.map((coin) => {
+        if (coin.name === soldCoin.name) {
+          if (coin.amt > amtSoldCoin) {
+            const newCoinObject = { name: coin.name, short: coin.short, image: coin.image, amt: (coin.amt - amtSoldCoin) }
+            return newCoinObject;
+          }
+        } else {
+          return coin;
+        }
+      })
+      setUserCoins(updatedCoins);
+      alert(`You have sold ${sellAmt} of ${soldCoin.name}`)
     }
   }
 
@@ -94,6 +118,7 @@ function App() {
           userMoney={userMoney}
           userCoins={userCoins}
           purchaseCoin={purchaseCoin}
+          sellCoin={sellCoin}
           coins={coins}
         />} />
       </Routes>

@@ -27,7 +27,8 @@ export default function BuyForm({ coins, userMoney, purchaseCoin, setBuy, trade 
         <form onSubmit={handleSubmit}>
             <label>Stock to purchase:</label>
             {/* populates dropdown list with variety of coins */}
-            <select onChange={(e) => handleChange(e)} data-dropup-auto="false">
+            <select onChange={(e) => handleChange(e)} data-dropup-auto="false" defaultValue="null">
+                <option value="null" disabled>Please select a coin</option>
                 {coins.map((coin) => {
                     return <option key={coin.name}>{coin.name}</option>
                 })}
@@ -38,7 +39,7 @@ export default function BuyForm({ coins, userMoney, purchaseCoin, setBuy, trade 
                     <span>{selectedCoin.name}</span>
                     <span>${selectedCoin.current_price}</span>
                     <label>Amount you wish to purchase:</label>
-                    <input type="number" onChange={handleBuyAmount} value={buyAmount} required></input>
+                    <input type="number" onChange={handleBuyAmount} value={buyAmount} min="1" max={userMoney} required></input>
                     <button type="submit">Purchase</button>
                 </div>
             }

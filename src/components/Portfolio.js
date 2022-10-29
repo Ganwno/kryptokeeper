@@ -6,7 +6,7 @@ import SellForm from './SellForm';
 import CoinList from './CoinList';
 
 
-export default function Portfolio({ coins, userMoney, userCoins, purchaseCoin }) {
+export default function Portfolio({ coins, userMoney, userCoins, purchaseCoin, sellCoin }) {
     const navigate = useNavigate();
     const [tradeHappening, setTradeHappening] = useState(false);
     const [buy, setBuy] = useState(false);
@@ -14,19 +14,21 @@ export default function Portfolio({ coins, userMoney, userCoins, purchaseCoin })
 
     return (
         <>
-            <h2>Hi I'm a portfolio</h2>
+            <h2>Portfolio</h2>
             <button onClick={() => navigate("/")}>Go back</button>
-            <CoinList
+            {/* <CoinList
                 coins={userCoins}
-            />
+            /> */}
+            {/* only displays buttons for buy/sell if a trade is not active*/}
             {!tradeHappening &&
                 <>
                     <button onClick={() => (setBuy(true), setTradeHappening(true))}>Buy</button>
-                    <button onClick={() => (setSell(true), setTradeHappening(true))}>Sell</button>
+                    {/* sell button is only available if the user has coins */}
+                    {userCoins.length > 0 && <button onClick={() => (setSell(true), setTradeHappening(true))}>Sell</button>}
                 </>
             }
 
-
+            {/* activates buy component only if the buy button is pressed*/}
             {buy &&
                 <BuyForm
                     setBuy={setBuy}
@@ -37,11 +39,14 @@ export default function Portfolio({ coins, userMoney, userCoins, purchaseCoin })
                 />
             }
 
-            {sell &&
+            {/* activates sell component only if the sell button is pressed */}
+            {(sell) &&
                 <SellForm
                     setSell={setSell}
                     trade={setTradeHappening}
                     userCoins={userCoins}
+                    sellCoin={sellCoin}
+                    coins={coins}
                 />
             }
         </>
