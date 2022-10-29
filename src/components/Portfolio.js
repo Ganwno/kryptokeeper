@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import BuyForm from './BuyForm';
 import SellForm from './SellForm';
-import CoinList from './CoinList';
-
 
 export default function Portfolio({ coins, userMoney, userCoins, purchaseCoin, sellCoin }) {
     const navigate = useNavigate();
@@ -16,10 +14,7 @@ export default function Portfolio({ coins, userMoney, userCoins, purchaseCoin, s
         <>
             <h2>Portfolio</h2>
             <button onClick={() => navigate("/")}>Go back</button>
-            {/* <CoinList
-                coins={userCoins}
-            /> */}
-            {/* only displays buttons for buy/sell if a trade is not active*/}
+
             {!tradeHappening &&
                 <>
                     <button onClick={() => (setBuy(true), setTradeHappening(true))}>Buy</button>
@@ -40,7 +35,7 @@ export default function Portfolio({ coins, userMoney, userCoins, purchaseCoin, s
             }
 
             {/* activates sell component only if the sell button is pressed */}
-            {(sell) &&
+            {sell &&
                 <SellForm
                     setSell={setSell}
                     trade={setTradeHappening}

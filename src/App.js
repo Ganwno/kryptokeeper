@@ -33,7 +33,6 @@ function App() {
     if (purchaseAmt > userMoney) {
       alert('Insufficient Funds');
     } else {
-      alert(`You have purchased $${purchaseAmt} of ${purchasedCoin.name}`)
       // removes money from user's wallet
       setUserMoney(userMoney - purchaseAmt);
 
@@ -54,31 +53,41 @@ function App() {
         // adds to new array which includes player's previous coins
         const updatedCoins = [...userCoins, coinObject]
         // updates player's coin wallet
-        setUserCoins(updatedCoins, console.log(userCoins))
+        setUserCoins(updatedCoins);
+        alert(`You have purchased $${purchaseAmt} of ${purchasedCoin.name}`);
       }
     }
   }
 
   function sellCoin(sellAmt, soldCoin) {
+    // obtains current price of the coin to be sold
     const coinPrice = coins[coins.findIndex((coin => coin.name === soldCoin.name))].current_price;
+    // obtains index of coin in user's coin array
     const userCoinIndex = userCoins.findIndex((coin) => coin.name === soldCoin.name);
+    // determines the coin units based on the user sell price
     const amtSoldCoin = sellAmt / coinPrice;
+    // checks to ensure the user has the necessary amount of coins to sell
     if (sellAmt > userCoins[userCoinIndex].amt * coinPrice) {
       alert('You have insufficient coins to sell')
     } else {
+      // updates user's cash
       setUserMoney(userMoney + parseInt(sellAmt));
-
-      const updatedCoins = userCoins.map((coin) => {
-        if (coin.name === soldCoin.name) {
-          if (coin.amt > amtSoldCoin) {
+      // updates the user's coin array, removing information if the user sold the entire stock of coin
+      if (userCoins[userCoinIndex].amt === amtSoldCoin) {
+        const updatedCoins = userCoins.filter((coin) => coin.name !== soldCoin.name)
+        setUserCoins(updatedCoins);
+      } else {
+        const updatedCoins = userCoins.map((coin) => {
+          if (coin.name === soldCoin.name) {
             const newCoinObject = { name: coin.name, short: coin.short, image: coin.image, amt: (coin.amt - amtSoldCoin) }
             return newCoinObject;
+          } else {
+            return coin;
           }
-        } else {
-          return coin;
-        }
-      })
-      setUserCoins(updatedCoins);
+        })
+        setUserCoins(updatedCoins);
+      }
+
       alert(`You have sold ${sellAmt} of ${soldCoin.name}`)
     }
   }

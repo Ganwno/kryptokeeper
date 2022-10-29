@@ -1,27 +1,32 @@
 import { useState } from 'react';
 
 export default function SellForm({ setSell, trade, userCoins, sellCoin, coins }) {
-    const [selectedCoin, setSelectedCoin] = useState();
+    const [selectedCoin, setSelectedCoin] = useState('null');
     const [sellAmount, setSellAmount] = useState(0);
     const [coinToSell, setCoinToSell] = useState(0);
+    const [coinIndex, setCoinIndex] = useState();
 
     function handleSubmit(e) {
         e.preventDefault();
-        sellCoin(sellAmount, coinToSell);
+        setSelectedCoin('null');
         setSell(false);
         trade(false);
+        sellCoin(sellAmount, coinToSell);
+        
+       
     }
 
     // changes occurring when manipulating dropdown
     function handleChange(e) {
         // updates value to whichever coin selected
-        let selectCoin = userCoins.filter((coin) => {
-            return coin.name === e.target.value;
-        })
-        setSelectedCoin(...selectCoin);
+        setSelectedCoin(e.target.value);
+
+        let targetCoin = userCoins.findIndex((coin) => coin.name === e.target.value);
+        setCoinIndex(targetCoin);
         // finds index of the selected coin to extract price from the original coin list
         const targetIndex = coins.findIndex((coin => coin.name === e.target.value))
         setCoinToSell(coins[targetIndex]);
+        console.log(coinToSell);
     }
 
     // changes occurring when inputting sell amount
@@ -35,7 +40,7 @@ export default function SellForm({ setSell, trade, userCoins, sellCoin, coins })
             <form onSubmit={handleSubmit}>
                 <label>Stock to sell:</label>
                 {/* populates dropdown list with variety of coins */}
-                <select onChange={(e) => handleChange(e)} data-dropup-auto="false" defaultValue="null">
+                <select onChange={(e) => handleChange(e)} data-dropup-auto="false" value={selectedCoin}>
                     <option value="null" disabled>Please Select Coin</option>
                     {userCoins.map((coin) => {
                         if (coin) {
@@ -46,12 +51,12 @@ export default function SellForm({ setSell, trade, userCoins, sellCoin, coins })
                 </select>
                 {
                     /* only renders when user selects coin from dropdown list */
-                    selectedCoin &&
+                    (coinIndex >= 0) &&
                     <div>
-                        <span>{selectedCoin.name}</span>
-                        <span>{coinToSell && `You have ${selectedCoin.amt} coins @ $${coinToSell.current_price} totaling $${selectedCoin.amt * coinToSell.current_price}`}</span>
+                        <span>{userCoins[coinIndex].name}</span>
+                        <span>{coinToSell && `You have ${userCoins[coinIndex].amt} coins @ $${coinToSell.current_price} totaling $${userCoins[coinIndex].amt * coinToSell.current_price}`}</span>
                         <label>Amount you wish to sell:</label>
-                        <input type="number" onChange={handleSellAmount} value={sellAmount} min="1" max={selectedCoin.amt * coinToSell.current_price} required></input>
+                        <input type="number" onChange={handleSellAmount} value={sellAmount} min="1" required></input>
                         <button type="submit">Sell</button>
                     </div>
                 }
