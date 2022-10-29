@@ -21,6 +21,7 @@ export default function BuyForm({ coins, userMoney, purchaseCoin, setBuy, trade 
     function handleSubmit(e) {
         e.preventDefault();
         (buyAmount > 0 && purchaseCoin(buyAmount, selectedCoin));
+        setBuyAmount(0);
     }
 
     return (

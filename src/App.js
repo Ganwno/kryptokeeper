@@ -1,33 +1,34 @@
 // modules
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
+
 // components
 import Navbar from './components/Navbar';
 import Home from './components/Home';
+import Login from './components/Login';
 import Portfolio from './components/Portfolio';
 // stylesheets
 import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isVerified, setIsVerified] = useState(false);
-  const [userPortfolio, setUserPortfolio] = useState([]);
+  const [investment, setInvestment] = useState(0);
   const [userMoney, setUserMoney] = useState(0);
-  const [userCoins, setUserCoins] = useState([])
+  const [userCoins, setUserCoins] = useState([]);
+  const [coinsAmt, setCoinsAmt] = useState();
   const [coins, setCoins] = useState([]);
 
+  const navigate = useNavigate();
   // temporary function for logging in and out to view different layouts and initializing user money
   function handleLogIn() {
     setIsLoggedIn(!isLoggedIn);
-    setUserMoney(10000);
+    if (isLoggedIn) {
+      setInvestment(10000);
+      setUserMoney(10000);
+    }
+    navigate('/');
   }
-
-  function displayUserInfo() {
-    console.log(userMoney);
-    console.log(userPortfolio)
-  }
-
 
   function purchaseCoin(purchaseAmt, purchasedCoin) {
     if (purchaseAmt > userMoney) {
@@ -54,12 +55,13 @@ function App() {
         const updatedCoins = [...userCoins, coinObject]
         // updates player's coin wallet
         setUserCoins(updatedCoins);
-        alert(`You have purchased $${purchaseAmt} of ${purchasedCoin.name}`);
       }
+      alert(`You have purchased $${purchaseAmt} of ${purchasedCoin.name}`);
     }
   }
 
   function sellCoin(sellAmt, soldCoin) {
+    console.log(sellAmt);
     // obtains current price of the coin to be sold
     const coinPrice = coins[coins.findIndex((coin => coin.name === soldCoin.name))].current_price;
     // obtains index of coin in user's coin array
@@ -92,6 +94,24 @@ function App() {
     }
   }
 
+  // this calculates user's net worth 
+  useEffect(() => {
+    if (userCoins.length > 0) {
+      const amounts = userCoins.map((coin) => {
+        const targetIndex = coins.findIndex((stockCoin) => stockCoin.name === coin.name)
+        return coin.amt * coins[targetIndex].current_price;
+      });
+      let total = 0;
+      for (let i = 0; i < amounts.length; i++) {
+        total = total + amounts[i];
+      }
+      setCoinsAmt(parseFloat(total.toFixed(2)));
+    } else {
+      setCoinsAmt(0);
+    }
+  });
+
+
   // on page load, grab crypto data from API
   useEffect(() => {
     axios({
@@ -115,14 +135,20 @@ function App() {
         handleLogIn={handleLogIn}
       />
       <Routes>
-        <Route path="/" element={
-          <Home
+        <Route path="/"
+          element={<Home
             coins={coins}
+            coinsAmt={coinsAmt}
+            investment={investment}
             userMoney={userMoney}
             isLoggedIn={isLoggedIn}
-            displayUserInfo={displayUserInfo}
-          />
-        } />
+          />}
+        />
+        <Route path="/login"
+          element={<Login
+            handleLogIn={handleLogIn}
+          />}
+        />
         <Route path="/portfolio" element={<Portfolio
           userMoney={userMoney}
           userCoins={userCoins}

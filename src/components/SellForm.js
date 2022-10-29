@@ -12,8 +12,6 @@ export default function SellForm({ setSell, trade, userCoins, sellCoin, coins })
         setSell(false);
         trade(false);
         sellCoin(sellAmount, coinToSell);
-        
-       
     }
 
     // changes occurring when manipulating dropdown
