@@ -22,25 +22,31 @@ function App() {
   const [coins, setCoins] = useState([]);
 
   const navigate = useNavigate();
-  // temporary function for logging in and out to view different layouts and initializing user money
+
+  // populates user information on log in and then redirects to home
   function handleLogIn(userEmail, userName, userInvestment, userCash, userCoins) {
-    setIsLoggedIn(!isLoggedIn)
+    setIsLoggedIn(true)
 
     setName(userName);
     setEmail(userEmail);
     setInvestment(userInvestment);
-    setUserMoney(userCash);
     setUserCoins(userCoins);
+    setUserMoney(userCash);
+
     navigate('/');
   }
 
+  // clears all user information on logout and redirects to home
   function handleLogOut() {
     setIsLoggedIn(false);
+
     setName('');
     setEmail('');
     setInvestment(0);
-    setUserMoney(0);
     setCoins([]);
+    setUserMoney(0);
+
+
     navigate('/');
   }
 
@@ -53,9 +59,6 @@ function App() {
     if (purchaseAmt > userMoney) {
       alert('Insufficient Funds');
     } else {
-      // removes money from user's wallet
-      setUserMoney(userMoney - purchaseAmt);
-
       // checks to see if the purchasedCoin already exists in user's coin wallet
       if (userCoins.some(x => x.short === purchasedCoin.symbol)) {
         const updatedCoins = userCoins.map((coin) => {
@@ -75,6 +78,8 @@ function App() {
         // updates player's coin wallet
         setUserCoins(updatedCoins);
       }
+      // removes money from user's wallet
+      setUserMoney(userMoney - purchaseAmt);
       alert(`You have purchased $${purchaseAmt} of ${purchasedCoin.name}`);
     }
   }
@@ -91,8 +96,6 @@ function App() {
     if (sellAmt > userCoins[userCoinIndex].amt * coinPrice) {
       alert('You have insufficient coins to sell')
     } else {
-      // updates user's cash
-      setUserMoney(userMoney + parseInt(sellAmt));
       // updates the user's coin array, removing information if the user sold the entire stock of coin
       if (userCoins[userCoinIndex].amt === amtSoldCoin) {
         const updatedCoins = userCoins.filter((coin) => coin.name !== soldCoin.name)
@@ -108,10 +111,15 @@ function App() {
         })
         setUserCoins(updatedCoins);
       }
-
+      // updates user's cash
+      setUserMoney(userMoney + parseInt(sellAmt));
       alert(`You have sold ${sellAmt} of ${soldCoin.name}`)
     }
   }
+
+  useEffect(() => {
+
+  }, [userMoney])
 
   // this calculates user's net worth 
   useEffect(() => {
