@@ -1,15 +1,13 @@
-import firebaseConfig from '../firebase';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { ref, onValue } from 'firebase/database';
 
 import useInputState from '../hooks/useInputState';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login({ isLoggedIn, handleLogIn }) {
+export default function Login({ database, isLoggedIn, handleLogIn }) {
     const [email, updateEmail, resetEmail] = useInputState('');
     const [password, updatePassword, resetPassword] = useInputState('');
     const navigate = useNavigate();
-    // creates variable that holds our db values
-    const database = getDatabase(firebaseConfig);
+
     // creates a variable that makes reference to our db
     const dbRef = ref(database, "/users");
 
@@ -22,8 +20,8 @@ export default function Login({ isLoggedIn, handleLogIn }) {
 
             const data = response.val();
             for (let user in data) {
-                if (email.toLowerCase() === data[user].email.toLowerCase() && password === data[user].password) {
-                    newState.push(data[user].email, data[user].name, data[user].investmentAmount, data[user].cash, (data[user].coins ? data[user].coins : []));
+                if (email.toLowerCase() === data[user].email && password === data[user].password) {
+                    newState.push(user, data[user].name, data[user].investmentAmount, data[user].cash, (data[user].coins ? data[user].coins : []));
                 }
             }
 
@@ -54,6 +52,5 @@ export default function Login({ isLoggedIn, handleLogIn }) {
                 </div>
             )}
         </>
-
     )
 }

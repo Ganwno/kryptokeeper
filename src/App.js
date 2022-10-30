@@ -1,6 +1,8 @@
 // modules
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import firebaseConfig from './firebase';
+import { getDatabase, ref, update, push, remove } from 'firebase/database';
 import axios from 'axios';
 
 // components
@@ -14,21 +16,22 @@ import './App.css';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [name, setName] = useState();
-  const [email, setEmail] = useState();
+  const [id, setId] = useState();
   const [investment, setInvestment] = useState(0);
   const [userMoney, setUserMoney] = useState(0);
   const [userCoins, setUserCoins] = useState([]);
   const [coinsAmt, setCoinsAmt] = useState();
   const [coins, setCoins] = useState([]);
 
+  const database = getDatabase(firebaseConfig);
   const navigate = useNavigate();
 
   // populates user information on log in and then redirects to home
-  function handleLogIn(userEmail, userName, userInvestment, userCash, userCoins) {
+  function handleLogIn(userId, userName, userInvestment, userCash, userCoins) {
     setIsLoggedIn(true)
 
     setName(userName);
-    setEmail(userEmail);
+    setId(userId);
     setInvestment(userInvestment);
     setUserCoins(userCoins);
     setUserMoney(userCash);
@@ -41,11 +44,10 @@ function App() {
     setIsLoggedIn(false);
 
     setName('');
-    setEmail('');
+    setId('');
     setInvestment(0);
-    setCoins([]);
+    setUserCoins([]);
     setUserMoney(0);
-
 
     navigate('/');
   }
@@ -117,8 +119,13 @@ function App() {
     }
   }
 
+  // this saves user info to db every time a transaction is made (ie. coin bought/sold & investment increased)
   useEffect(() => {
+    if (isLoggedIn) {
+      const dbRef = ref(database, `users/${id}`);
 
+      update(dbRef, { investmentAmount: investment, cash: userMoney, coins: userCoins })
+    }
   }, [userMoney])
 
   // this calculates user's net worth 
@@ -175,10 +182,13 @@ function App() {
         />
         <Route path="/login"
           element={<Login
+            database={database}
+            isLoggedIn={isLoggedIn}
             handleLogIn={handleLogIn}
           />}
         />
         <Route path="/portfolio" element={<Portfolio
+          isLoggedIn={isLoggedIn}
           userMoney={userMoney}
           userCoins={userCoins}
           purchaseCoin={purchaseCoin}
