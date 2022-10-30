@@ -40,7 +40,7 @@ export default function BuyForm({ coins, userMoney, purchaseCoin, setBuy, trade 
                     <span>{selectedCoin.name}</span>
                     <span>${selectedCoin.current_price}</span>
                     <label>Amount you wish to purchase:</label>
-                    <input type="number" onChange={handleBuyAmount} value={buyAmount} min="1" max={userMoney} required></input>
+                    <input type="number" onChange={handleBuyAmount} value={buyAmount} min="1" required></input>
                     <button type="submit">Purchase</button>
                 </div>
             }

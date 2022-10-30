@@ -13,6 +13,8 @@ import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
   const [investment, setInvestment] = useState(0);
   const [userMoney, setUserMoney] = useState(0);
   const [userCoins, setUserCoins] = useState([]);
@@ -21,12 +23,24 @@ function App() {
 
   const navigate = useNavigate();
   // temporary function for logging in and out to view different layouts and initializing user money
-  function handleLogIn() {
-    setIsLoggedIn(!isLoggedIn);
-    if (isLoggedIn) {
-      setInvestment(10000);
-      setUserMoney(10000);
-    }
+  function handleLogIn(userEmail, userName, userInvestment, userCash, userCoins) {
+    setIsLoggedIn(!isLoggedIn)
+
+    setName(userName);
+    setEmail(userEmail);
+    setInvestment(userInvestment);
+    setUserMoney(userCash);
+    setUserCoins(userCoins);
+    navigate('/');
+  }
+
+  function handleLogOut() {
+    setIsLoggedIn(false);
+    setName('');
+    setEmail('');
+    setInvestment(0);
+    setUserMoney(0);
+    setCoins([]);
     navigate('/');
   }
 
@@ -132,11 +146,12 @@ function App() {
     <div className="App">
       <Navbar
         isLoggedIn={isLoggedIn}
-        handleLogIn={handleLogIn}
+        handleLogIn={handleLogOut}
       />
       <Routes>
         <Route path="/"
           element={<Home
+            name={name}
             coins={coins}
             coinsAmt={coinsAmt}
             investment={investment}

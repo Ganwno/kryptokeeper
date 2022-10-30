@@ -27,7 +27,7 @@ export default function Login({ handleLogIn }) {
             const data = response.val();
             for (let user in data) {
                 if (email === data[user].email && password === data[user].password) {
-                    handleLogIn();
+                    handleLogIn(data[user].email, data[user].name, data[user].investmentAmount, data[user].cash, (data[user].coins ? data[user].coins : []));
                 } else {
                     alert("Email and Password do not match");
                 }
