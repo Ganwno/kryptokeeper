@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 
 import '../styles/Navbar.css';
 
-export default function Navbar({ isLoggedIn, handleLogIn }) {
+export default function Navbar({ isLoggedIn, handleLogOut }) {
     const navigate = useNavigate();
     function handleClick() {
-        {!isLoggedIn ? navigate('/login') : handleLogIn()};
+        {!isLoggedIn ? navigate('/login') : handleLogOut()};
     }
 
     return (

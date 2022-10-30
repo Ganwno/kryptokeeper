@@ -44,6 +44,11 @@ function App() {
     navigate('/');
   }
 
+  function addFunds(addedAmt) {
+    setUserMoney(parseInt(userMoney) + addedAmt);
+    setInvestment(parseInt(investment) + addedAmt);
+  }
+
   function purchaseCoin(purchaseAmt, purchasedCoin) {
     if (purchaseAmt > userMoney) {
       alert('Insufficient Funds');
@@ -146,7 +151,7 @@ function App() {
     <div className="App">
       <Navbar
         isLoggedIn={isLoggedIn}
-        handleLogIn={handleLogOut}
+        handleLogOut={handleLogOut}
       />
       <Routes>
         <Route path="/"
@@ -155,6 +160,7 @@ function App() {
             coins={coins}
             coinsAmt={coinsAmt}
             investment={investment}
+            addFunds={addFunds}
             userMoney={userMoney}
             isLoggedIn={isLoggedIn}
           />}

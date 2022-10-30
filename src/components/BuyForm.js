@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import useInputState from '../hooks/useInputState';
 
 import '../styles/BuyForm.css';
 
-export default function BuyForm({ coins, userMoney, purchaseCoin, setBuy, trade }) {
+export default function BuyForm({ coins, purchaseCoin, toggleBuy }) {
     const [selectedCoin, setSelectedCoin] = useState('');
-    const [buyAmount, setBuyAmount] = useState(0);
+    const [amt, updateAmt, resetAmt] = useInputState(0);
 
     function handleChange(e) {
         let selectCoin = coins.filter((coin) => {
@@ -13,15 +14,11 @@ export default function BuyForm({ coins, userMoney, purchaseCoin, setBuy, trade 
         setSelectedCoin(...selectCoin)
     }
 
-    function handleBuyAmount(e) {
-        setBuyAmount(e.target.value)
-    }
-
     // when submits form to purchase, checks if amount is greater than 0 before committing to purchase
     function handleSubmit(e) {
         e.preventDefault();
-        (buyAmount > 0 && purchaseCoin(buyAmount, selectedCoin));
-        setBuyAmount(0);
+        (amt > 0 && purchaseCoin(amt, selectedCoin));
+        resetAmt();
     }
 
     return (
@@ -40,12 +37,12 @@ export default function BuyForm({ coins, userMoney, purchaseCoin, setBuy, trade 
                     <span>{selectedCoin.name}</span>
                     <span>${selectedCoin.current_price}</span>
                     <label>Amount you wish to purchase:</label>
-                    <input type="number" onChange={handleBuyAmount} value={buyAmount} min="1" required></input>
+                    <input type="number" value={amt} onChange={updateAmt}  min="1" required></input>
                     <button type="submit">Purchase</button>
                 </div>
             }
             {/*cancels the form and returns to Portfolio*/}
-            <button onClick={() => (setBuy(false), trade(false))}>Cancel</button>
+            <button onClick={() => toggleBuy()}>Cancel</button>
         </form>
     )
 }

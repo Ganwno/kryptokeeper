@@ -2,7 +2,7 @@ import CoinList from './CoinList';
 import AccountInfo from './AccountInfo';
 import AboutApp from './AboutApp';
 
-export default function Home({ name, coins, coinsAmt, isLoggedIn, investment, userMoney, userCoins }) {
+export default function Home({ name, coins, coinsAmt, isLoggedIn, investment, userMoney, userCoins, addFunds }) {
     return (
         <>
             <CoinList coins={coins} />
@@ -14,6 +14,7 @@ export default function Home({ name, coins, coinsAmt, isLoggedIn, investment, us
                         userMoney={userMoney}
                         coinsAmt={coinsAmt}
                         userCoins={userCoins}
+                        addFunds={addFunds}
                     />
                     :
                     <AboutApp />
