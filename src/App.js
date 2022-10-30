@@ -12,15 +12,18 @@ import Login from './components/Login';
 import Portfolio from './components/Portfolio';
 // stylesheets
 import './App.css';
+import Register from './components/Register';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // data regarding user's account
   const [name, setName] = useState();
   const [id, setId] = useState();
   const [investment, setInvestment] = useState(0);
   const [userMoney, setUserMoney] = useState(0);
   const [userCoins, setUserCoins] = useState([]);
-  const [coinsAmt, setCoinsAmt] = useState();
+  const [coinsAmt, setCoinsAmt] = useState(); // calculated value of user's coins based on current market value
+  // data to populate information regarding various cryptocurrency
   const [coins, setCoins] = useState([]);
 
   const database = getDatabase(firebaseConfig);
@@ -52,6 +55,7 @@ function App() {
     navigate('/');
   }
 
+  // this function allows the user to add more money to their investment
   function addFunds(addedAmt) {
     setUserMoney(parseInt(userMoney) + addedAmt);
     setInvestment(parseInt(investment) + addedAmt);
@@ -146,20 +150,42 @@ function App() {
   });
 
 
+
   // on page load, grab crypto data from API
   useEffect(() => {
-    axios({
-      url: "https://api.coingecko.com/api/v3/coins/markets",
-      method: "get",
-      dataResponse: "json",
-      params: {
-        vs_currency: "usd",
-        per_page: 20
-      }
-    }).then((res) => {
-      console.log(res.data);
-      setCoins(res.data);
-    })
+    let isMounted = true;
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source()
+
+    const getData = () => {
+      axios({
+        url: "https://api.coingecko.com/api/v3/coins/markets",
+        method: "get",
+        dataResponse: "json",
+        params: {
+          vs_currency: "usd",
+          per_page: 20
+        }
+      }, { cancelToken: source.token }).then((res) => {
+        setCoins(res.data);
+      }).catch((err) => {
+        if (axios.isCancel(err)) {
+          console.log('Successfully Aborted');
+        } else {
+          alert("Fetch Error", err);
+        }
+      });
+    }
+    // performs a refresh of coins & prices every 15s
+    const id = setInterval(getData, 15000)
+    // immediately invokes the fetch request on launch
+    getData();
+    return () => {
+      console.log('unmounted');
+      source.cancel();
+      clearInterval(id);
+      isMounted = false;
+    }
   }, [])
 
   return (
@@ -185,6 +211,11 @@ function App() {
             database={database}
             isLoggedIn={isLoggedIn}
             handleLogIn={handleLogIn}
+          />}
+        />
+        <Route path="/register"
+          element={<Register
+
           />}
         />
         <Route path="/portfolio" element={<Portfolio
