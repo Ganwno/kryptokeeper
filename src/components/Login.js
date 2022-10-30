@@ -49,6 +49,8 @@ export default function Login({ database, isLoggedIn, handleLogIn }) {
                         <input type="password" onChange={(e) => updatePassword(e)} value={password} />
                         <button type="submit">Log In</button>
                     </form>
+                    <p>Don't have an account? Sign up today for free!</p>
+                    <button onClick={() => navigate('/register')}>Register</button>
                 </div>
             )}
         </>

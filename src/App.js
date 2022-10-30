@@ -10,9 +10,10 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
 import Portfolio from './components/Portfolio';
+import Register from './components/Register';
 // stylesheets
 import './App.css';
-import Register from './components/Register';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -181,7 +182,6 @@ function App() {
     // immediately invokes the fetch request on launch
     getData();
     return () => {
-      console.log('unmounted');
       source.cancel();
       clearInterval(id);
       isMounted = false;
@@ -215,7 +215,8 @@ function App() {
         />
         <Route path="/register"
           element={<Register
-
+            database={database}
+            isLoggedIn={isLoggedIn}
           />}
         />
         <Route path="/portfolio" element={<Portfolio
