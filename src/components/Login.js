@@ -1,5 +1,5 @@
 import { ref, onValue } from 'firebase/database';
-
+import { useEffect } from 'react';
 import useInputState from '../hooks/useInputState';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,29 +30,27 @@ export default function Login({ database, isLoggedIn, handleLogIn }) {
             } else {
                 alert("Email and Password do not match");
             }
-            resetEmail();
-            resetPassword();
         })
+        resetEmail();
+        resetPassword();
     }
 
+    useEffect(() => {
+        (isLoggedIn && navigate('/'))
+    })
+
     return (
-        <>
-            {isLoggedIn ? (
-                <>{navigate('/')}</>
-            ) : (
-                <div>
-                    <h2>Login Page</h2>
-                    <form onSubmit={handleSubmit}>
-                        <label>Email</label>
-                        <input type="email" onChange={(e) => updateEmail(e)} value={email} />
-                        <label>Password</label>
-                        <input type="password" onChange={(e) => updatePassword(e)} value={password} />
-                        <button type="submit">Log In</button>
-                    </form>
-                    <p>Don't have an account? Sign up today for free!</p>
-                    <button onClick={() => navigate('/register')}>Register</button>
-                </div>
-            )}
-        </>
+        <div className="formCard">
+            <h2>Login Page</h2>
+            <form onSubmit={handleSubmit} className="form">
+                <label for="email" value="email" />
+                <input name="email" type="email" className="formInput" placeholder="Email" onChange={(e) => updateEmail(e)} value={email} />
+                <label for="password" value="password" />
+                <input type="password" className="formInput" placeholder="Password" onChange={(e) => updatePassword(e)} value={password} />
+                <button type="submit">Log In</button>
+            </form>
+            <p>Don't have an account? Sign up today for free!</p>
+            <button onClick={() => navigate('/register')}>Register</button>
+        </div>
     )
 }

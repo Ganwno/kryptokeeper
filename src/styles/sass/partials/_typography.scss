@@ -1,0 +1,6 @@
+@use './variables' as *;
+
+h1 {
+    color: $headingColour;
+    cursor: pointer;
+}

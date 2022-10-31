@@ -1,0 +1,21 @@
+.button {
+    border: none;
+}
+
+.App {
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.App-body {
+    height: 80vh;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}

@@ -39,7 +39,7 @@ export default function SellForm({ toggleSell, userCoins, sellCoin, coins }) {
                     {userCoins.map((coin) => {
                         if (coin) {
                             return <option key={coin.name} value={coin.name}>{coin.name}</option>
-                        }
+                        } else return '';
                     })}
                 </select>
                 {
@@ -47,7 +47,7 @@ export default function SellForm({ toggleSell, userCoins, sellCoin, coins }) {
                     (coinIndex >= 0) &&
                     <div>
                         <span>{userCoins[coinIndex].name}</span>
-                        <span>{coinToSell && `You have ${userCoins[coinIndex].amt} coins @ $${coinToSell.current_price} totaling $${userCoins[coinIndex].amt * coinToSell.current_price}`}</span>
+                        <span>{coinToSell && `You have ${userCoins[coinIndex].amt} coins @ $${coinToSell.current_price} totaling $${(userCoins[coinIndex].amt * coinToSell.current_price).toFixed(2)}`}</span>
                         <label>Amount you wish to sell:</label>
                         <input type="number" onChange={updateAmt} value={amt} min="1" required></input>
                         <button type="submit">Sell</button>

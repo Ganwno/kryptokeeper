@@ -31,19 +31,19 @@ export default function RegisterForm({ database }) {
         } else {
             push(dbRef, {name: name, email: email.toLowerCase(), password: password, investmentAmount: 0, cash: 0});
             alert('Successfully registered, please log in.')
-            navigate('/login');
+            navigate('/');
         }
     }
 
     return (
-        <>
+        <div className="formCard">
             <h2>Register Form</h2>
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <input type="name" placeholder="Name" value={name} onChange={updateName} required />
-                <input type="email" placeholder="Email" value={email} onChange={updateEmail} required />
-                <input type="password" placeholder="Password" value={password} onChange={updatePassword} required />
+            <form onSubmit={(e) => handleSubmit(e)} class="form">
+                <input type="name" placeholder="Name" className="formInput" value={name} onChange={updateName} required />
+                <input type="email" placeholder="Email" className="formInput" value={email} onChange={updateEmail} required />
+                <input type="password" placeholder="Password" className="formInput" value={password} onChange={updatePassword} required />
                 <button type="submit">Sign Up</button>
             </form>
-        </>
+        </div>
     )
 }

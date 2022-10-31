@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import firebaseConfig from './firebase';
-import { getDatabase, ref, update, push, remove } from 'firebase/database';
+import { getDatabase, ref, update } from 'firebase/database';
 import axios from 'axios';
 
 // components
@@ -11,8 +11,9 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Portfolio from './components/Portfolio';
 import Register from './components/Register';
-// stylesheets
-import './App.css';
+import Footer from './components/Footer';
+
+import './styles/styles.css';
 
 
 function App() {
@@ -131,7 +132,7 @@ function App() {
 
       update(dbRef, { investmentAmount: investment, cash: userMoney, coins: userCoins })
     }
-  }, [userMoney])
+  }, [userMoney, investment, userCoins])
 
   // this calculates user's net worth 
   useEffect(() => {
@@ -148,13 +149,12 @@ function App() {
     } else {
       setCoinsAmt(0);
     }
-  });
+  }, [coins, userCoins]);
 
 
 
   // on page load, grab crypto data from API
   useEffect(() => {
-    let isMounted = true;
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source()
 
@@ -184,7 +184,6 @@ function App() {
     return () => {
       source.cancel();
       clearInterval(id);
-      isMounted = false;
     }
   }, [])
 
@@ -194,40 +193,43 @@ function App() {
         isLoggedIn={isLoggedIn}
         handleLogOut={handleLogOut}
       />
-      <Routes>
-        <Route path="/"
-          element={<Home
-            name={name}
-            coins={coins}
-            coinsAmt={coinsAmt}
-            investment={investment}
-            addFunds={addFunds}
+      <div className="App-body">
+        <Routes>
+          <Route path="/"
+            element={<Home
+              name={name}
+              coins={coins}
+              coinsAmt={coinsAmt}
+              investment={investment}
+              addFunds={addFunds}
+              userMoney={userMoney}
+              isLoggedIn={isLoggedIn}
+            />}
+          />
+          <Route path="/login"
+            element={<Login
+              database={database}
+              isLoggedIn={isLoggedIn}
+              handleLogIn={handleLogIn}
+            />}
+          />
+          <Route path="/register"
+            element={<Register
+              database={database}
+              isLoggedIn={isLoggedIn}
+            />}
+          />
+          <Route path="/portfolio" element={<Portfolio
+            isLoggedIn={isLoggedIn}
             userMoney={userMoney}
-            isLoggedIn={isLoggedIn}
-          />}
-        />
-        <Route path="/login"
-          element={<Login
-            database={database}
-            isLoggedIn={isLoggedIn}
-            handleLogIn={handleLogIn}
-          />}
-        />
-        <Route path="/register"
-          element={<Register
-            database={database}
-            isLoggedIn={isLoggedIn}
-          />}
-        />
-        <Route path="/portfolio" element={<Portfolio
-          isLoggedIn={isLoggedIn}
-          userMoney={userMoney}
-          userCoins={userCoins}
-          purchaseCoin={purchaseCoin}
-          sellCoin={sellCoin}
-          coins={coins}
-        />} />
-      </Routes>
+            userCoins={userCoins}
+            purchaseCoin={purchaseCoin}
+            sellCoin={sellCoin}
+            coins={coins}
+          />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
   );
 }

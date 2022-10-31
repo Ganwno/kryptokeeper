@@ -1,18 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 
-import '../styles/Navbar.css';
-
 export default function Navbar({ isLoggedIn, handleLogOut }) {
     const navigate = useNavigate();
-    function handleClick() {
-        {!isLoggedIn ? navigate('/login') : handleLogOut()};
-    }
+    const  handleClick = () => !isLoggedIn ? navigate('/login') : handleLogOut();
 
     return (
-        <header>
+        <header className="Navbar-header">
             <nav className="Navbar">
-                <h1>Krypto King</h1>
-                <button onClick={handleClick}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
+                <h1 onClick={() => navigate('/')}>Krypto King</h1>
+                <button className="button Navbar-loginButton" onClick={handleClick}>{isLoggedIn ? 'Log Out' : 'Log In'}</button>
             </nav>
         </header>
     )
