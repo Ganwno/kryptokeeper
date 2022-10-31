@@ -8,7 +8,7 @@ export default function AccountInfo({ name, coinsAmt, userMoney, investment, add
     const [addingFunds, toggle] = useToggleState();
 
     return (
-        <>
+        <section className="AccountInfo">
             <h2>Account Info</h2>
             <span>Welcome back, {name}!</span>
 
@@ -16,18 +16,18 @@ export default function AccountInfo({ name, coinsAmt, userMoney, investment, add
             <span>Available Funds: ${userMoney}</span>
             <span>Coin Value: ${coinsAmt}</span>
             <span style={{ color: netWorth < 0 ? "red" : "green" }}>Net Worth: ${netWorth}</span>
-            <button onClick={() => navigate('/portfolio')}>Go to Portfolio</button>
+            <button className="button AccountInfo-button" onClick={() => navigate('/portfolio')}>Go to Portfolio</button>
             {
                 addingFunds ? (
                     <AddFundForm addFunds={addFunds} toggleAddFunds={toggle} />
                 ) : (
                     <>
-                        <button onClick={() => toggle()}>Add funds</button>
+                        <button className="button AccountInfo-button" onClick={() => toggle()}>Add funds</button>
                     </>
 
                 )
             }
 
-        </>
+        </section>
     )
 }

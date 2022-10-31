@@ -1,0 +1,63 @@
+@use './variables' as *;
+
+.CoinList-container {
+    height:350px;
+    overflow: hidden;
+}
+
+.Coin-container {
+    display: inline-block;
+    padding: 20px;
+}
+
+.Coin-card {
+    width: 100px;
+    display: flex;
+    Flex-direction: column;
+}
+
+.Coin-coinName {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.Coin-coinPrice{
+    margin: 0;
+    display: flex;
+}
+
+.Coin-card img {
+    width: 100%;
+}
+
+.Coin-timePeriod {
+    width: 20%;
+}
+
+.Coin-coinPriceGain {
+    width: 80%;
+    color: $colorSuccess;
+    display: flex;
+    justify-content: space-around;
+}
+
+.Coin-coinPriceLoss {
+    width: 80%;
+    color: $colorDanger;
+    display: flex;
+    justify-content: space-around;
+}
+
+.Coin-arrow {
+    height: 20px;
+    margin: 0;
+    display: inline-block;
+}
+
+.Coin-arrowUp {
+    filter: invert(60%) sepia(47%) saturate(495%) hue-rotate(71deg) brightness(97%) contrast(87%);
+}
+
+.Coin-arrowDown {
+    filter: invert(37%) sepia(64%) saturate(875%) hue-rotate(320deg) brightness(99%) contrast(85%);
+}

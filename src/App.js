@@ -14,6 +14,7 @@ import Register from './components/Register';
 import Footer from './components/Footer';
 
 import './styles/styles.css';
+import Logout from './components/Logout';
 
 
 function App() {
@@ -54,7 +55,7 @@ function App() {
     setUserCoins([]);
     setUserMoney(0);
 
-    navigate('/');
+    setTimeout(function(){navigate('/')}, 5000);
   }
 
   // this function allows the user to add more money to their investment
@@ -165,10 +166,12 @@ function App() {
         dataResponse: "json",
         params: {
           vs_currency: "usd",
-          per_page: 20
+          per_page: 20,
+          price_change_percentage: "1h,24h,7d"
         }
       }, { cancelToken: source.token }).then((res) => {
         setCoins(res.data);
+        console.log(res.data);
       }).catch((err) => {
         if (axios.isCancel(err)) {
           console.log('Successfully Aborted');
@@ -191,7 +194,6 @@ function App() {
     <div className="App">
       <Navbar
         isLoggedIn={isLoggedIn}
-        handleLogOut={handleLogOut}
       />
       <div className="App-body">
         <Routes>
@@ -211,6 +213,11 @@ function App() {
               database={database}
               isLoggedIn={isLoggedIn}
               handleLogIn={handleLogIn}
+            />}
+          />
+          <Route path="/logout"
+            element={<Logout
+              handleLogOut={handleLogOut}
             />}
           />
           <Route path="/register"

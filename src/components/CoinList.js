@@ -1,5 +1,4 @@
 import Coin from './Coin';
-import '../styles/CoinList.css';
 
 export default function CoinList({ coins }) {
     return (

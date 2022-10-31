@@ -171,6 +171,15 @@ h1 {
   cursor: pointer;
 }
 
+html {
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 .button {
   border: none;
 }
@@ -185,15 +194,18 @@ h1 {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
 }
 
 .App-body {
   height: 80vh;
   padding: 0;
   margin: 0;
+  overflow: scroll;
+  background: #1b1b1b;
+  color: white;
+  -webkit-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
 }
 
 a {
@@ -296,4 +308,102 @@ a {
 
 .formInput {
   width: 80%;
+}
+
+.CoinList-container {
+  height: 350px;
+  overflow: hidden;
+}
+
+.Coin-container {
+  display: inline-block;
+  padding: 20px;
+}
+
+.Coin-card {
+  width: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  Flex-direction: column;
+}
+
+.Coin-coinName {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.Coin-coinPrice {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.Coin-card img {
+  width: 100%;
+}
+
+.Coin-timePeriod {
+  width: 20%;
+}
+
+.Coin-coinPriceGain {
+  width: 80%;
+  color: #5cb85c;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.Coin-coinPriceLoss {
+  width: 80%;
+  color: #D9534F;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.Coin-arrow {
+  height: 20px;
+  margin: 0;
+  display: inline-block;
+}
+
+.Coin-arrowUp {
+  -webkit-filter: invert(60%) sepia(47%) saturate(495%) hue-rotate(71deg) brightness(97%) contrast(87%);
+          filter: invert(60%) sepia(47%) saturate(495%) hue-rotate(71deg) brightness(97%) contrast(87%);
+}
+
+.Coin-arrowDown {
+  -webkit-filter: invert(37%) sepia(64%) saturate(875%) hue-rotate(320deg) brightness(99%) contrast(85%);
+          filter: invert(37%) sepia(64%) saturate(875%) hue-rotate(320deg) brightness(99%) contrast(85%);
+}
+
+.AccountInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80%;
+  padding: 20px;
+  background-color: lavender;
+  margin: auto;
+  border-radius: 15px;
+}
+
+.AccountInfo-button {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.5em 1rem;
+  margin: auto;
+  margin-bottom: 10px;
 }
