@@ -1,19 +1,20 @@
 @use './variables' as *;
 
 .CoinList-container {
-    height:350px;
     overflow: hidden;
+    display: flex;
 }
 
 .Coin-container {
-    display: inline-block;
     padding: 20px;
+    display: flex;
+    align-items: flex-end;
 }
 
 .Coin-card {
     width: 100px;
     display: flex;
-    Flex-direction: column;
+    flex-direction: column;
 }
 
 .Coin-coinName {
@@ -21,7 +22,7 @@
     font-weight: 500;
 }
 
-.Coin-coinPrice{
+.Coin-coinPrice {
     margin: 0;
     display: flex;
 }
@@ -31,26 +32,29 @@
 }
 
 .Coin-timePeriod {
-    width: 20%;
+    width: 40%;
+    text-align: left;
+}
+
+.Coin-coinPriceGain,
+.Coin-coinPriceLoss {
+    width: 60%;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .Coin-coinPriceGain {
-    width: 80%;
     color: $colorSuccess;
-    display: flex;
-    justify-content: space-around;
 }
 
 .Coin-coinPriceLoss {
-    width: 80%;
     color: $colorDanger;
-    display: flex;
-    justify-content: space-around;
 }
 
 .Coin-arrow {
     height: 20px;
-    margin: 0;
+    width: 10px;
+    padding-right:5px;
     display: inline-block;
 }
 
@@ -60,4 +64,11 @@
 
 .Coin-arrowDown {
     filter: invert(37%) sepia(64%) saturate(875%) hue-rotate(320deg) brightness(99%) contrast(85%);
+}
+
+@media (max-width: 480px) {
+    .Coin-card img {
+        width: 60%;
+        margin: auto;
+    }
 }

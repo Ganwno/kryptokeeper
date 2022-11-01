@@ -15,7 +15,7 @@ export default function AccountInfo({ name, coinsAmt, userMoney, investment, add
             <span>Initial Investment: ${investment}</span>
             <span>Available Funds: ${userMoney}</span>
             <span>Coin Value: ${coinsAmt}</span>
-            <span style={{ color: netWorth < 0 ? "red" : "green" }}>Net Worth: ${netWorth}</span>
+            <span className={Math.abs(netWorth) !== 0 && `${netWorth > 0 ? "AccountInfo-gain" : "AccountInfo-loss"}`}>Net Worth: ${netWorth}</span>
             <button className="button AccountInfo-button" onClick={() => navigate('/portfolio')}>Go to Portfolio</button>
             {
                 addingFunds ? (
@@ -27,7 +27,6 @@ export default function AccountInfo({ name, coinsAmt, userMoney, investment, add
 
                 )
             }
-
         </section>
     )
 }

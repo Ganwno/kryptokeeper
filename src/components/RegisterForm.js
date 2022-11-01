@@ -21,24 +21,24 @@ export default function RegisterForm({ database }) {
                 if (email.toLowerCase() === data[user].email) {
                     isEmailUsed = true;
                 }
-            }            
+            }
         })
-        if( isEmailUsed ) {
+        if (isEmailUsed) {
             alert(`The email ${email} has already been registered.`);
             resetName();
             resetEmail();
             resetPassword();
         } else {
-            push(dbRef, {name: name, email: email.toLowerCase(), password: password, investmentAmount: 0, cash: 0});
+            push(dbRef, { name: name, email: email.toLowerCase(), password: password, investmentAmount: 0, cash: 0 });
             alert('Successfully registered, please log in.')
-            navigate('/');
+            navigate('/login');
         }
     }
 
     return (
         <div className="formCard">
             <h2>Register Form</h2>
-            <form onSubmit={(e) => handleSubmit(e)} class="form">
+            <form onSubmit={(e) => handleSubmit(e)} className="form">
                 <input type="name" placeholder="Name" className="formInput" value={name} onChange={updateName} required />
                 <input type="email" placeholder="Email" className="formInput" value={email} onChange={updateEmail} required />
                 <input type="password" placeholder="Password" className="formInput" value={password} onChange={updatePassword} required />

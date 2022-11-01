@@ -35,17 +35,13 @@ export default function Login({ database, isLoggedIn, handleLogIn }) {
         resetPassword();
     }
 
-    useEffect(() => {
-        (isLoggedIn && navigate('/'))
-    })
-
     return (
         <div className="formCard">
             <h2>Login Page</h2>
             <form onSubmit={handleSubmit} className="form">
-                <label for="email" value="email" />
+                <label htmlFor="email" value="email" />
                 <input name="email" type="email" className="formInput" placeholder="Email" onChange={(e) => updateEmail(e)} value={email} />
-                <label for="password" value="password" />
+                <label htmlFor="password" value="password" />
                 <input type="password" className="formInput" placeholder="Password" onChange={(e) => updatePassword(e)} value={password} />
                 <button type="submit">Log In</button>
             </form>

@@ -1,9 +1,11 @@
+@use './variables' as *;
+
 .AccountInfo {
     display: flex;
     flex-direction: column;
     width: 80%;
     padding: 20px;
-    background-color: lavender;
+    background-color: #2b2b2b;
     margin: auto;
     border-radius: 15px;
 }
@@ -13,4 +15,12 @@
     padding: 0.5em 1rem;
     margin: auto;
     margin-bottom: 10px;
+}
+
+.AccountInfo-gain{
+    color: $colorSuccess;
+}
+
+.AccountInfo-loss{
+    color: $colorDanger;
 }

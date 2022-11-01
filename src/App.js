@@ -12,6 +12,7 @@ import Login from './components/Login';
 import Portfolio from './components/Portfolio';
 import Register from './components/Register';
 import Footer from './components/Footer';
+import ErrorPage from './components/ErrorPage';
 
 import './styles/styles.css';
 import Logout from './components/Logout';
@@ -54,8 +55,6 @@ function App() {
     setInvestment(0);
     setUserCoins([]);
     setUserMoney(0);
-
-    setTimeout(function(){navigate('/')}, 5000);
   }
 
   // this function allows the user to add more money to their investment
@@ -192,9 +191,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar
-        isLoggedIn={isLoggedIn}
-      />
+      <Navbar isLoggedIn={isLoggedIn} />
       <div className="App-body">
         <Routes>
           <Route path="/"
@@ -215,25 +212,24 @@ function App() {
               handleLogIn={handleLogIn}
             />}
           />
-          <Route path="/logout"
-            element={<Logout
-              handleLogOut={handleLogOut}
-            />}
-          />
+          <Route path="/logout" element={<Logout handleLogOut={handleLogOut} />} />
           <Route path="/register"
             element={<Register
               database={database}
               isLoggedIn={isLoggedIn}
             />}
           />
-          <Route path="/portfolio" element={<Portfolio
-            isLoggedIn={isLoggedIn}
-            userMoney={userMoney}
-            userCoins={userCoins}
-            purchaseCoin={purchaseCoin}
-            sellCoin={sellCoin}
-            coins={coins}
-          />} />
+          <Route path="/portfolio"
+            element={<Portfolio
+              isLoggedIn={isLoggedIn}
+              userMoney={userMoney}
+              userCoins={userCoins}
+              purchaseCoin={purchaseCoin}
+              sellCoin={sellCoin}
+              coins={coins}
+            />}
+          />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
       <Footer />

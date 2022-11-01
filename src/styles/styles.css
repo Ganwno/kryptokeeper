@@ -284,7 +284,7 @@ a {
   min-height: 400px;
   height: 50vh;
   max-height: 500px;
-  background-color: lavender;
+  background-color: #2b2b2b;
   margin: 50px auto;
   padding: 20px;
 }
@@ -311,13 +311,20 @@ a {
 }
 
 .CoinList-container {
-  height: 350px;
   overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .Coin-container {
-  display: inline-block;
   padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 .Coin-card {
@@ -325,7 +332,10 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  Flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .Coin-coinName {
@@ -345,32 +355,33 @@ a {
 }
 
 .Coin-timePeriod {
-  width: 20%;
+  width: 40%;
+  text-align: left;
+}
+
+.Coin-coinPriceGain,
+.Coin-coinPriceLoss {
+  width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .Coin-coinPriceGain {
-  width: 80%;
   color: #5cb85c;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
 }
 
 .Coin-coinPriceLoss {
-  width: 80%;
   color: #D9534F;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
 }
 
 .Coin-arrow {
   height: 20px;
-  margin: 0;
+  width: 10px;
+  padding-right: 5px;
   display: inline-block;
 }
 
@@ -384,6 +395,12 @@ a {
           filter: invert(37%) sepia(64%) saturate(875%) hue-rotate(320deg) brightness(99%) contrast(85%);
 }
 
+@media (max-width: 480px) {
+  .Coin-card img {
+    width: 60%;
+    margin: auto;
+  }
+}
 .AccountInfo {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -394,7 +411,7 @@ a {
           flex-direction: column;
   width: 80%;
   padding: 20px;
-  background-color: lavender;
+  background-color: #2b2b2b;
   margin: auto;
   border-radius: 15px;
 }
@@ -406,4 +423,12 @@ a {
   padding: 0.5em 1rem;
   margin: auto;
   margin-bottom: 10px;
+}
+
+.AccountInfo-gain {
+  color: #5cb85c;
+}
+
+.AccountInfo-loss {
+  color: #D9534F;
 }
