@@ -4,7 +4,7 @@ export default function Coin({ coin }) {
     return (
             <div className="Coin-card">
                 <img src={coin.image} className="Coin-coinImg" alt={coin.name} />
-                <span className="Coin-coinName">{coin.symbol}</span>
+                <span className="Coin-coinName">{coin.symbol.toUpperCase()}</span>
                 <span>${coin.current_price}</span>
 
                 <CoinPriceChange period="1h" priceChange={coin.price_change_percentage_1h_in_currency} />

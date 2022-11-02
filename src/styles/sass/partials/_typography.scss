@@ -1,12 +1,40 @@
 @use './variables' as *;
 
+@font-face {
+    font-family: 'Roboto';
+    src: url("../assets/fonts/Roboto-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url("../assets/fonts/Merriweather-Regular.ttf");
+    font-weight: 400;
+}
+
 h1 {
+    font-family: $titleFont;
     color: $headingColour;
     cursor: pointer;
 }
 
+h2 {
+    font-family: $titleFont;
+}
+
 p {
+    font-family: $textFont;
     font-size: 1.25rem;
+}
+
+span {
+    font-family: $textFont;
+    font-size: 1.15rem;
+}
+
+.button {
+    font-family: $textFont;
+    font-weight: 600;
 }
 
 @media (max-width: 480px) {

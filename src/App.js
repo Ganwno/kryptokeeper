@@ -169,7 +169,6 @@ function App() {
         }
       }, { cancelToken: source.token }).then((res) => {
         setCoins(res.data);
-        console.log(res.data);
       }).catch((err) => {
         if (axios.isCancel(err)) {
           console.log('Successfully Aborted');

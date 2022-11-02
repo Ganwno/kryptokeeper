@@ -166,13 +166,39 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: "Roboto";
+  src: url("../assets/fonts/Roboto-Regular.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Merriweather";
+  src: url("../assets/fonts/Merriweather-Regular.ttf");
+  font-weight: 400;
+}
 h1 {
+  font-family: "Merriweather";
   color: #FFBF00;
   cursor: pointer;
 }
 
+h2 {
+  font-family: "Merriweather";
+}
+
 p {
+  font-family: "Roboto";
   font-size: 1.25rem;
+}
+
+span {
+  font-family: "Roboto";
+  font-size: 1.15rem;
+}
+
+.button {
+  font-family: "Roboto";
+  font-weight: 600;
 }
 
 @media (max-width: 480px) {
@@ -408,7 +434,6 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: 20px;
 }
 
 .Coin-card {
@@ -500,8 +525,10 @@ a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 80%;
-  padding: 20px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 50px;
   background-color: #FFBF00;
   color: #2b2b2b;
   margin: auto;
@@ -549,7 +576,7 @@ a {
   max-width: 500px;
   min-height: 400px;
   background-color: #2b2b2b;
-  margin: 50px auto;
+  margin: auto;
   padding: 20px;
 }
 

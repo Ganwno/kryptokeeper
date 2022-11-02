@@ -50,8 +50,8 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
                 </div>
                 <span>Coin: <strong>{selectedCoin.name}</strong></span>
                 <span>Current Price: ${selectedCoin ? selectedCoin.current_price : "0.00"}</span>
-                <span>ATH: ${selectedCoin ? selectedCoin.ath.toFixed(2) : "0.00"}</span>
-                <span>ATL: ${selectedCoin ? selectedCoin.atl.toFixed(2) : "0.00"}</span>
+                <span>ATH: ${selectedCoin ? (selectedCoin.ath > 0.01 ? selectedCoin.ath.toFixed(2) : selectedCoin.ath.toFixed(5)) : "0.00"}</span>
+                <span>ATL: ${selectedCoin ? (selectedCoin.atl > 0.01 ? selectedCoin.atl.toFixed(2) : selectedCoin.atl.toFixed(5)) : "0.00"}</span>
 
                 <span>
                     <CoinPriceChange period="1h" priceChange={selectedCoin ? selectedCoin.price_change_percentage_1h_in_currency : 0} />
