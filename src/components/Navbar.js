@@ -8,7 +8,7 @@ export default function Navbar({ isLoggedIn }) {
             <nav className="Navbar">
                 <Link to="/"><h1>Kryptokeeper</h1></Link>
                 <Link to={isLoggedIn ? '/logout' : '/login'} className="Navbar-loginButton">
-                     <img src={isLoggedIn ? logoutIcon : loginIcon} className="navIcon" />
+                     <img src={isLoggedIn ? logoutIcon : loginIcon} className="navIcon" alt="Log In & Out Button" />
                 </Link>
             </nav>
         </header>
