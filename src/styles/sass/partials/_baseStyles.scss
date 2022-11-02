@@ -1,14 +1,41 @@
+@use './variables' as *;
+
 // these top two hide scrollbars but allow scrolling functionality
 html {
     scrollbar-width: none;
+    background: url("../assets/images/polygon.svg");
+    background-size: cover;
     /* Firefox */
 }
 ::-webkit-scrollbar {
     display: none;
 }
 
+.sr-only {
+    position: absolute;
+    position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0,0,0,0) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+
 .button {
     border: none;
+    border-radius: 15px;
+    padding: 0.5rem 0;
+    margin: 1rem 0.5rem;
+    text-transform: uppercase;
+}
+
+.navIcon {
+    width: 30px;
+    height: 30px;
+    filter: invert(100%) sepia(0%) saturate(3410%) hue-rotate(170deg) brightness(113%) contrast(90%);
 }
 
 .App {
@@ -23,11 +50,19 @@ html {
     padding: 0;
     margin: 0;
     overflow: scroll;
-    background: #1b1b1b;
+ 
     color: white;
     flex-grow: 2;
 }
 
 a {
     text-decoration: none;
+}
+
+.positive {
+    color: $colorSuccess;
+}
+
+.negative {
+    color: $colorDanger;
 }

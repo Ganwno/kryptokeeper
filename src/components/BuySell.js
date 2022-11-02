@@ -1,5 +1,10 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import useInputState from '../hooks/useInputState';
+import CoinPriceChange from './CoinPriceChange';
+
+import backButton from '../assets/images/circle-left-solid.svg';
+import cryptocurrency from '../assets/images/cryptocurrency.png'
 
 export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
     const [selectedCoin, setSelectedCoin] = useState('');
@@ -34,32 +39,48 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
     }
 
     return (
-        <div className="formCard">
+        <div className="BuySell-formCard">
+            <div className="BuySell-backButtonContainer">
+                <Link to="/" className="backButton"><img src={backButton} className="navIcon backButton" alt="back button" /></Link>
+            </div>
+
+            <div className="BuySell-formInfo">
+                <div className="formImage">
+                    <img src={(selectedCoin ? selectedCoin.image : cryptocurrency)} class="Coin-bsImg" alt={selectedCoin ? selectedCoin.name : "cryptocurrency"} />
+                </div>
+                <span>Coin: <strong>{selectedCoin.name}</strong></span>
+                <span>Current Price: ${selectedCoin ? selectedCoin.current_price : "0.00"}</span>
+                <span>ATH: ${selectedCoin ? selectedCoin.ath.toFixed(2) : "0.00"}</span>
+                <span>ATL: ${selectedCoin ? selectedCoin.atl.toFixed(2) : "0.00"}</span>
+
+                <span>
+                    <CoinPriceChange period="1h" priceChange={selectedCoin ? selectedCoin.price_change_percentage_1h_in_currency : 0} />
+                </span>
+                <span>
+                    <CoinPriceChange period="24h" priceChange={selectedCoin ? selectedCoin.price_change_percentage_24h_in_currency : 0} />
+                </span>
+                <span>
+                    <CoinPriceChange period="7d" priceChange={selectedCoin ? selectedCoin.price_change_percentage_7d_in_currency : 0} />
+                </span>
+                <span>Coins Owned: {userCoins[coinIndex] ? userCoins[coinIndex].amt.toFixed(5) : 0}</span>
+                <span>Coins Owned Value: {userCoins[coinIndex] ? (userCoins[coinIndex].amt * selectedCoin.current_price).toFixed(2) : "$0.00"}</span>
+            </div>
             <form className="form">
-                <label>Stock to purchase:</label>
+                <label className="sr-only">Coin:</label>
                 {/* populates dropdown list with variety of coins */}
-                <select onChange={(e) => handleChange(e)} data-dropup-auto="false" defaultValue="">
+                <select onChange={(e) => handleChange(e)} className="BuySell-input" data-dropup-auto="false" defaultValue="">
                     <option value="" disabled>Please select a coin</option>
                     {coins.map((coin) => {
                         return <option key={coin.name}>{coin.name}</option>
                     })}
                 </select>
 
-                <div>
-                    {selectedCoin &&
-                        <>
-                            <span>{selectedCoin.name}</span>
-                            <span>${selectedCoin.current_price}</span>
-                            <span>{userCoins[coinIndex] && `You have ${userCoins[coinIndex].amt} coins @ $${selectedCoin.current_price} totaling $${(userCoins[coinIndex].amt * selectedCoin.current_price).toFixed(2)}`}</span>
-                        </>
-                    }
+                <label htmlFor="bsAmount" className="sr-only">Amount:</label>
+                <input type="number" name="bsAmount" className="BuySell-input" value={amt} onChange={updateAmt} min="1" required />
 
-                    <label htmlFor="bsAmount">Amount:</label>
-                    <input type="number" name="bsAmount" value={amt} onChange={updateAmt} min="1" required></input>
-                    <button onClick={() => handleBuy()}>Buy</button>
-                    <button onClick={() => handleSell()}>Sell</button>
-                </div>
             </form>
+            <button onClick={() => handleBuy()} className="button BuySell-button">Buy</button>
+            <button onClick={() => handleSell()} className="button BuySell-button">Sell</button>
         </div>
     )
 }

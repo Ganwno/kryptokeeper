@@ -2,9 +2,8 @@ import CoinPriceChange from './CoinPriceChange';
 
 export default function Coin({ coin }) {
     return (
-        <div className="Coin-container">
             <div className="Coin-card">
-                <img src={coin.image} alt={coin.name} />
+                <img src={coin.image} className="Coin-coinImg" alt={coin.name} />
                 <span className="Coin-coinName">{coin.symbol}</span>
                 <span>${coin.current_price}</span>
 
@@ -14,7 +13,6 @@ export default function Coin({ coin }) {
                     
                 <CoinPriceChange period="7d" priceChange={coin.price_change_percentage_7d_in_currency} />
             </div>
-        </div>
     )
 }
 

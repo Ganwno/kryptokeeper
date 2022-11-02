@@ -42,7 +42,7 @@ export default function RegisterForm({ database }) {
                 <input type="name" placeholder="Name" className="formInput" value={name} onChange={updateName} required />
                 <input type="email" placeholder="Email" className="formInput" value={email} onChange={updateEmail} required />
                 <input type="password" placeholder="Password" className="formInput" value={password} onChange={updatePassword} required />
-                <button type="submit">Sign Up</button>
+                <button type="submit" className="button formButton">Sign Up</button>
             </form>
         </div>
     )

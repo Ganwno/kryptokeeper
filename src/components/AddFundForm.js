@@ -10,12 +10,13 @@ export default function AddFundForm({ addFunds, toggleAddFunds }) {
                 addFunds(parseInt(value));
                 reset();
                 toggleAddFunds();
-            }}
-                style={{ margin: '0 1rem', width: '100%' }} // brings edit field in line with todo styles
-            >
-                <input type="number" value={value} onChange={handleChange} />
+            }} >
+                <input type="number" value={value} className="AddFund-input" onChange={handleChange} />
+                <div>
+                    <button type="submit" className="button AddFund-button">+</button>
+                    <button onClick={() => toggleAddFunds()} className="button AddFund-button">Cancel</button>
+                </div>
             </form>
-            <button onClick={() => toggleAddFunds()}>Cancel</button>
         </>
     )
 }

@@ -11,8 +11,6 @@ export default function Portfolio({ isLoggedIn, coins, userMoney, userCoins, pur
             {
                 isLoggedIn ? (
                     <>
-                        <h2>Portfolio</h2>
-                        <button onClick={() => navigate("/")}>Go back</button>
                         <BuySell
                             userMoney={userMoney}
                             purchaseCoin={purchaseCoin}
@@ -20,7 +18,6 @@ export default function Portfolio({ isLoggedIn, coins, userMoney, userCoins, pur
                             coins={coins}
                             userCoins={userCoins}
                         />
-
                     </>
                 ) : (
                     <>

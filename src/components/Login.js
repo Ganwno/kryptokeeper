@@ -1,9 +1,8 @@
 import { ref, onValue } from 'firebase/database';
-import { useEffect } from 'react';
 import useInputState from '../hooks/useInputState';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login({ database, isLoggedIn, handleLogIn }) {
+export default function Login({ database, handleLogIn }) {
     const [email, updateEmail, resetEmail] = useInputState('');
     const [password, updatePassword, resetPassword] = useInputState('');
     const navigate = useNavigate();
@@ -43,10 +42,10 @@ export default function Login({ database, isLoggedIn, handleLogIn }) {
                 <input name="email" type="email" className="formInput" placeholder="Email" onChange={(e) => updateEmail(e)} value={email} />
                 <label htmlFor="password" value="password" />
                 <input type="password" className="formInput" placeholder="Password" onChange={(e) => updatePassword(e)} value={password} />
-                <button type="submit">Log In</button>
+                <button type="submit" className="button formButton">Log In</button>
             </form>
             <p>Don't have an account? Sign up today for free!</p>
-            <button onClick={() => navigate('/register')}>Register</button>
+            <button onClick={() => navigate('/register')} className="button formButton">Register</button>
         </div>
     )
 }

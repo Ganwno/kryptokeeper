@@ -3,18 +3,15 @@
 .CoinList-container {
     overflow: hidden;
     display: flex;
-}
-
-.Coin-container {
-    padding: 20px;
-    display: flex;
-    align-items: flex-end;
+    margin: 20px;
 }
 
 .Coin-card {
+    padding: 20px 0;
     width: 100px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .Coin-coinName {
@@ -31,30 +28,30 @@
     width: 100%;
 }
 
+.Coin-coinImg{
+    height: 100px;
+    width: 100px;
+}
+
 .Coin-timePeriod {
     width: 40%;
     text-align: left;
 }
 
-.Coin-coinPriceGain,
-.Coin-coinPriceLoss {
+.Coin-na {
+    padding-left: 10px;
+}
+
+.Coin-coinPriceAmt {
     width: 60%;
     display: flex;
     justify-content: flex-start;
 }
 
-.Coin-coinPriceGain {
-    color: $colorSuccess;
-}
-
-.Coin-coinPriceLoss {
-    color: $colorDanger;
-}
-
 .Coin-arrow {
     height: 20px;
     width: 10px;
-    padding-right:5px;
+    padding-right: 5px;
     display: inline-block;
 }
 
@@ -66,9 +63,14 @@
     filter: invert(37%) sepia(64%) saturate(875%) hue-rotate(320deg) brightness(99%) contrast(85%);
 }
 
+
 @media (max-width: 480px) {
     .Coin-card img {
         width: 60%;
         margin: auto;
+    }
+
+    .Coin-coinImg {
+        height: 60px;
     }
 }

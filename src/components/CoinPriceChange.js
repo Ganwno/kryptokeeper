@@ -6,14 +6,14 @@ export default function CoinPriceChange({ period, priceChange }) {
     return (
         <div className="Coin-coinPrice">
             <span className="Coin-timePeriod">{period}:</span>
-            <span className={priceChange >= 0 ? "Coin-coinPriceGain" : "Coin-coinPriceLoss"}>
+            <span className={priceChange >= 0 ? "Coin-coinPriceAmt positive" : "Coin-coinPriceAmt negative"}>
                 {priceChange !== 0 &&
                     <img
                         src={priceChange > 0 ? caretUp : caretDown}
                         alt="arrow up"
                         className={`Coin-arrow ${priceChange > 0 ? "Coin-arrowUp" : "Coin-arrowDown"}`}
                     />}
-                {Math.abs(priceChange).toFixed(2)}%
+                {priceChange ? `${Math.abs(priceChange).toFixed(2)}%` : <span className="Coin-na">N/A</span>}
             </span>
         </div>
     )

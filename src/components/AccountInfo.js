@@ -9,14 +9,16 @@ export default function AccountInfo({ name, coinsAmt, userMoney, investment, add
 
     return (
         <section className="AccountInfo">
+            <span className="AccountInfo-welcome">Welcome back, {name}!</span>
+
             <h2>Account Info</h2>
-            <span>Welcome back, {name}!</span>
 
             <span>Initial Investment: ${investment}</span>
             <span>Available Funds: ${userMoney}</span>
             <span>Coin Value: ${coinsAmt}</span>
             <span className={Math.abs(netWorth) !== 0 && `${netWorth > 0 ? "AccountInfo-gain" : "AccountInfo-loss"}`}>Net Worth: ${netWorth}</span>
-            <button className="button AccountInfo-button" onClick={() => navigate('/portfolio')}>Go to Portfolio</button>
+
+            <button className="button AccountInfo-button" onClick={() => navigate('/portfolio')}>Trade</button>
             {
                 addingFunds ? (
                     <AddFundForm addFunds={addFunds} toggleAddFunds={toggle} />
@@ -24,7 +26,6 @@ export default function AccountInfo({ name, coinsAmt, userMoney, investment, add
                     <>
                         <button className="button AccountInfo-button" onClick={() => toggle()}>Add funds</button>
                     </>
-
                 )
             }
         </section>

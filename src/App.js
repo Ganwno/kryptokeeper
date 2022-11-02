@@ -9,14 +9,13 @@ import axios from 'axios';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Portfolio from './components/Portfolio';
 import Register from './components/Register';
 import Footer from './components/Footer';
 import ErrorPage from './components/ErrorPage';
 
 import './styles/styles.css';
-import Logout from './components/Logout';
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
