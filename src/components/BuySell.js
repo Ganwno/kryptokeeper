@@ -4,7 +4,7 @@ import useInputState from '../hooks/useInputState';
 import CoinPriceChange from './CoinPriceChange';
 
 import backButton from '../assets/images/circle-left-solid.svg';
-import cryptocurrency from '../assets/images/cryptocurrency.png'
+import cryptocurrency from '../assets/images/coin-generic.svg';
 
 export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
     const [selectedCoin, setSelectedCoin] = useState('');
@@ -46,7 +46,9 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
 
             <div className="BuySell-formInfo">
                 <div className="formImage">
-                    <img src={(selectedCoin ? selectedCoin.image : cryptocurrency)} class="Coin-bsImg" alt={selectedCoin ? selectedCoin.name : "cryptocurrency"} />
+                    <img 
+                    src={(selectedCoin ? selectedCoin.image : cryptocurrency)} className={`Coin-bsImg ${!selectedCoin && 'BuySell-placeholderImg'}`}
+                    alt={selectedCoin ? selectedCoin.name : "cryptocurrency"} />
                 </div>
                 <span>Coin: <strong>{selectedCoin.name}</strong></span>
                 <span>Current Price: ${selectedCoin ? selectedCoin.current_price : "0.00"}</span>
@@ -79,8 +81,8 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
                 <input type="number" name="bsAmount" className="BuySell-input" value={amt} onChange={updateAmt} min="1" required />
 
             </form>
-            <button onClick={() => handleBuy()} className="button BuySell-button">Buy</button>
-            <button onClick={() => handleSell()} className="button BuySell-button">Sell</button>
+            <button onClick={() => handleBuy()} className="button BuySell-button bgAccent">Buy</button>
+            <button onClick={() => handleSell()} className="button BuySell-button bgAccent">Sell</button>
         </div>
     )
 }

@@ -12,11 +12,21 @@ export default function AccountInfo({ name, coinsAmt, userMoney, investment, add
             <span className="AccountInfo-welcome">Welcome back, {name}!</span>
 
             <h2>Account Info</h2>
-
-            <span>Initial Investment: ${investment}</span>
-            <span>Available Funds: ${userMoney}</span>
-            <span>Coin Value: ${coinsAmt}</span>
-            <span className={Math.abs(netWorth) !== 0 && `${netWorth > 0 ? "AccountInfo-gain" : "AccountInfo-loss"}`}>Net Worth: ${netWorth}</span>
+            <ul>
+                <li className="AccountInfo-item">
+                    <span>Initial Investment: ${investment}</span>
+                </li>
+                <li className="AccountInfo-item">
+                    <span>Available Funds: ${userMoney}</span>
+                </li>
+                <li className="AccountInfo-item">
+                    <span>Coin Value: ${coinsAmt}</span>
+                </li>
+                <li className="AccountInfo-item">
+                    <span>Net Worth:</span>
+                    <span className={Math.abs(netWorth) !== 0 && `${netWorth > 0 ? "AccountInfo-gain" : "AccountInfo-loss"}`}> ${netWorth}</span>
+                </li>
+            </ul>
 
             <button className="button AccountInfo-button" onClick={() => navigate('/portfolio')}>Trade</button>
             {

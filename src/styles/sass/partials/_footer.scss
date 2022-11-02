@@ -10,14 +10,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
     a {
         color: $headingColour;
         text-decoration: none;
     }
 }
 
+.Footer-secondLine {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoCoinGecko {
+    height: 3rem;
+}
+
 @media (max-width: 720px) {
-    .Footer-secondLine {
-        display: block;
+    .Footer {
+        flex-direction: column;
     }
 }

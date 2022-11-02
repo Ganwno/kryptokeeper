@@ -14,9 +14,9 @@ export default function Logout({ handleLogOut }) {
     }, [handleLogOut, navigate])
 
     return (
-        <div>
+        <div className="fittedCard">
             <h2>Thank you for using Krypto King</h2>
-            <p>You have been logged out. You should be redirected in 5 seconds.</p>
+            <p>You have been logged out.</p><p>You should be redirected in 5 seconds.</p>
         </div>
     )
 }

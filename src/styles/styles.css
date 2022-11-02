@@ -266,6 +266,12 @@ html {
   -webkit-box-flex: 2;
       -ms-flex-positive: 2;
           flex-grow: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 a {
@@ -278,6 +284,46 @@ a {
 
 .negative {
   color: #D9534F;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.fittedCard {
+  width: 90%;
+  max-width: 700px;
+  min-height: 300px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 20px auto;
+  background-color: rgba(255, 191, 0, 0.9);
+  color: #2b2b2b;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.accent {
+  color: #FFBF00;
+}
+
+.bgAccent {
+  background-color: #FFBF00;
+}
+
+.bgPositive {
+  background-color: #5cb85c;
+}
+
+.bgNegative {
+  background-color: #D9534F;
+}
+
+.registerLink {
+  font-weight: 700;
 }
 
 .Navbar-header {
@@ -344,15 +390,33 @@ a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  gap: 1rem;
 }
 .Footer a {
   color: #FFBF00;
   text-decoration: none;
 }
 
+.Footer-secondLine {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+
+.logoCoinGecko {
+  height: 3rem;
+}
+
 @media (max-width: 720px) {
-  .Footer-secondLine {
-    display: block;
+  .Footer {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
 }
 .formCard {
@@ -549,8 +613,12 @@ a {
   color: #D9534F;
 }
 
+.AccountInfo-item {
+  margin: 0.5rem;
+}
+
 .AccountInfo-welcome {
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 .AddFund-input {
@@ -559,8 +627,30 @@ a {
   padding: 0.5rem;
 }
 
+.AddFund-buttonContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .AddFund-button {
   width: 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.fundsIcon {
+  height: 25px;
 }
 
 @media (max-width: 480px) {
@@ -616,20 +706,7 @@ a {
   text-align: center;
 }
 
-.aboutApp {
-  width: 90%;
-  max-width: 700px;
-  min-height: 300px;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  margin: 20px auto;
-  background-color: #FFBF00;
-  color: #2b2b2b;
-  border-radius: 15px;
-  padding: 20px;
-}
-
-.registerLink {
-  font-weight: 700;
+.BuySell-placeholderImg {
+  -webkit-filter: invert(100%) sepia(1%) saturate(6212%) hue-rotate(251deg) brightness(133%) contrast(90%);
+          filter: invert(100%) sepia(1%) saturate(6212%) hue-rotate(251deg) brightness(133%) contrast(90%);
 }

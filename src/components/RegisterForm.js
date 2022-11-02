@@ -37,12 +37,12 @@ export default function RegisterForm({ database }) {
 
     return (
         <div className="formCard">
-            <h2>Register Form</h2>
+            <h2 className="accent" >Register Form</h2>
             <form onSubmit={(e) => handleSubmit(e)} className="form">
                 <input type="name" placeholder="Name" className="formInput" value={name} onChange={updateName} required />
                 <input type="email" placeholder="Email" className="formInput" value={email} onChange={updateEmail} required />
                 <input type="password" placeholder="Password" className="formInput" value={password} onChange={updatePassword} required />
-                <button type="submit" className="button formButton">Sign Up</button>
+                <button type="submit" className="button formButton bgAccent">Sign Up</button>
             </form>
         </div>
     )
