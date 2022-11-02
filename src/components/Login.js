@@ -35,17 +35,19 @@ export default function Login({ database, handleLogIn }) {
     }
 
     return (
-        <div className="formCard">
-            <h2 className="accent">Login Page</h2>
-            <form onSubmit={handleSubmit} className="form">
-                <label htmlFor="email" value="email" />
-                <input name="email" type="email" className="formInput" placeholder="Email" onChange={(e) => updateEmail(e)} value={email} />
-                <label htmlFor="password" value="password" />
-                <input type="password" className="formInput" placeholder="Password" onChange={(e) => updatePassword(e)} value={password} />
-                <button type="submit" className="button formButton bgAccent">Log In</button>
-            </form>
-            <p>Don't have an account? Sign up today for free!</p>
-            <button onClick={() => navigate('/register')} className="button formButton bgAccent">Register</button>
+        <div className="posY">
+            <div className="formCard">
+                <h2 className="accent">Login Page</h2>
+                <form onSubmit={handleSubmit} className="form">
+                    <label htmlFor="email" value="email" />
+                    <input name="email" type="email" className="formInput" placeholder="Email" onChange={(e) => updateEmail(e)} value={email} />
+                    <label htmlFor="password" value="password" />
+                    <input type="password" className="formInput" placeholder="Password" onChange={(e) => updatePassword(e)} value={password} />
+                    <button type="submit" className="button formButton bgAccent">Log In</button>
+                </form>
+                <p>Don't have an account? Sign up today for free!</p>
+                <button onClick={() => navigate('/register')} className="button formButton bgAccent">Register</button>
+            </div>
         </div>
     )
 }

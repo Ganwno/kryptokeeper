@@ -1,16 +1,17 @@
+import { Navigate } from 'react-router-dom';
 import RegisterForm from './RegisterForm';
 
 export default function Register({ isLoggedIn, database }) {
 
     return (
-        <>
+        <div className="posY">
             {isLoggedIn ? (
-                <h1>I'm a register</h1>
+                <Navigate to="/" />
             ) : (
                 <RegisterForm
                     database={database}
                 />
             )}
-        </>
+        </div>
     )
 }

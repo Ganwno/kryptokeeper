@@ -53,8 +53,6 @@ html {
     overflow: scroll;
     color: white;
     flex-grow: 2;
-    display: flex;
-    align-items: center;
 }
 
 a {
@@ -105,4 +103,10 @@ ul {
 
 .registerLink {
     font-weight: 700;
+}
+
+.posY {
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
