@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import useInputState from '../hooks/useInputState';
 import CoinPriceChange from './CoinPriceChange';
 
-import backButton from '../assets/images/circle-left-solid.svg';
+import BackButton from './BackButton';
+
 import cryptocurrency from '../assets/images/coin-generic.svg';
 
 export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
@@ -40,9 +40,7 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
 
     return (
         <div className="BuySell-formCard">
-            <div className="BuySell-backButtonContainer">
-                <Link to="/" className="backButton"><img src={backButton} className="navIcon backButton" alt="back button" /></Link>
-            </div>
+            <BackButton destination="/" />
 
             <div className="BuySell-formInfo">
                 <div className="formImage">

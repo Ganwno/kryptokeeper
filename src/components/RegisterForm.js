@@ -2,6 +2,8 @@ import { ref, onValue, push } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
 import useInputState from '../hooks/useInputState';
 
+import BackButton from './BackButton';
+
 export default function RegisterForm({ database }) {
     const [email, updateEmail, resetEmail] = useInputState('');
     const [password, updatePassword, resetPassword] = useInputState('');
@@ -37,6 +39,7 @@ export default function RegisterForm({ database }) {
 
     return (
         <div className="formCard">
+            <BackButton destination="/login" />
             <h2 className="accent" >Register Form</h2>
             <form onSubmit={(e) => handleSubmit(e)} className="form">
                 <input type="name" placeholder="Name" className="formInput" value={name} onChange={updateName} required />

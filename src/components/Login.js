@@ -2,6 +2,8 @@ import { ref, onValue } from 'firebase/database';
 import useInputState from '../hooks/useInputState';
 import { useNavigate } from 'react-router-dom';
 
+import BackButton from './BackButton';
+
 export default function Login({ database, handleLogIn }) {
     const [email, updateEmail, resetEmail] = useInputState('');
     const [password, updatePassword, resetPassword] = useInputState('');
@@ -37,6 +39,7 @@ export default function Login({ database, handleLogIn }) {
     return (
         <div className="posY">
             <div className="formCard">
+                <BackButton destination="/" />
                 <h2 className="accent">Login Page</h2>
                 <form onSubmit={handleSubmit} className="form">
                     <label htmlFor="email" value="email" />

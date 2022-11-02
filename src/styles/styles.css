@@ -245,6 +245,14 @@ html {
           filter: invert(100%) sepia(0%) saturate(3410%) hue-rotate(170deg) brightness(113%) contrast(90%);
 }
 
+.backButton {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  -webkit-filter: invert(100%) sepia(0%) saturate(3410%) hue-rotate(170deg) brightness(113%) contrast(90%);
+          filter: invert(100%) sepia(0%) saturate(3410%) hue-rotate(170deg) brightness(113%) contrast(90%);
+}
+
 .App {
   text-align: center;
   height: 100vh;
