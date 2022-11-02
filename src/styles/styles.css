@@ -338,6 +338,15 @@ ul {
           align-items: center;
 }
 
+.left {
+  text-align: left;
+}
+
+@media (max-width: 480px) {
+  .fittedCard {
+    padding: 15px;
+  }
+}
 .Navbar-header {
   background: -webkit-gradient(linear, left top, left bottom, from(rgb(27, 27, 27)), to(rgba(27, 27, 27, 0.2)));
   background: linear-gradient(180deg, rgb(27, 27, 27) 0%, rgba(27, 27, 27, 0.2) 100%);
