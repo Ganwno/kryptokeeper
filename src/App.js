@@ -131,7 +131,7 @@ function App() {
 
       update(dbRef, { investmentAmount: investment, cash: userMoney, coins: userCoins })
     }
-  }, [userMoney, investment, userCoins])
+  }, [userMoney, investment, userCoins, database, id, isLoggedIn])
 
   // this calculates user's net worth 
   useEffect(() => {

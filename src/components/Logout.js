@@ -11,7 +11,7 @@ export default function Logout({ handleLogOut }) {
             }
         }, 5000);
         handleLogOut();
-    }, [])
+    }, [handleLogOut, navigate])
 
     return (
         <div>
