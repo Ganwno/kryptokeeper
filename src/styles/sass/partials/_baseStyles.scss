@@ -2,9 +2,8 @@
 
 // these top two hide scrollbars but allow scrolling functionality
 html {
+    background-color: #111111;
     scrollbar-width: none;
-    background: url("../assets/images/polygon.svg");
-    background-size: cover;
     /* Firefox */
 }
 
@@ -47,10 +46,14 @@ html {
 }
 
 .App {
+    background: url("../assets/images/polygon.svg");
+    background-size: cover;
     text-align: center;
+    max-width: 1920px;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    margin: auto;
 }
 
 .App-body {

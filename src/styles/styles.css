@@ -207,9 +207,8 @@ span {
   }
 }
 html {
+  background-color: #111111;
   scrollbar-width: none;
-  background: url("../assets/images/polygon.svg");
-  background-size: cover;
   /* Firefox */
 }
 
@@ -254,7 +253,10 @@ html {
 }
 
 .App {
+  background: url("../assets/images/polygon.svg");
+  background-size: cover;
   text-align: center;
+  max-width: 1920px;
   height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -263,6 +265,7 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin: auto;
 }
 
 .App-body {
