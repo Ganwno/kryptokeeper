@@ -6,9 +6,9 @@ export default function Portfolio({ isLoggedIn, coins, userMoney, userCoins, pur
 
     // only renders if user is logged in
     return (
-        <div className="posY">
-            {
-                isLoggedIn ? (
+        // <div className="posY">
+        //     {
+        //         isLoggedIn ? (
                     <BuySell
                         userMoney={userMoney}
                         purchaseCoin={purchaseCoin}
@@ -16,10 +16,10 @@ export default function Portfolio({ isLoggedIn, coins, userMoney, userCoins, pur
                         coins={coins}
                         userCoins={userCoins}
                     />
-                ) : (
-                    <Navigate to="/" />
-                )
-            }
-        </div>
+    //             ) : (
+    //                 <Navigate to="/" />
+    //             )
+    //         }
+    //     </div>
     )
 }

@@ -44,6 +44,7 @@
     display: flex;
     justify-content: center;
 }
+
 .AddFund-button {
     width: 70px;
     display: flex;
@@ -51,10 +52,10 @@
     justify-content: center;
 }
 
-
 .fundsIcon {
     height: 25px;
 }
+
 @media (max-width: 480px) {
     .AccountInfo-welcome {
         font-size: 1.75rem;
