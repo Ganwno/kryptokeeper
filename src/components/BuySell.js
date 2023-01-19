@@ -2,14 +2,21 @@ import { useState } from 'react';
 import useInputState from '../hooks/useInputState';
 import CoinPriceChange from './CoinPriceChange';
 
+import { useCoinData } from './ContextCoinData';
+import { useUserData, useUpdateUserData } from './ContextUserData';
+
 import BackButton from './BackButton';
 
 import cryptocurrency from '../assets/images/coin-generic.svg';
 
-export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
+export default function BuySell() {
     const [selectedCoin, setSelectedCoin] = useState('');
     const [amt, updateAmt, resetAmt] = useInputState(0);
     const [coinIndex, setCoinIndex] = useState();
+
+    const coins = useCoinData();
+    const userData = useUserData();
+    const updateUserData = useUpdateUserData();
 
     function handleChange(e) {
         let selectCoin = coins.filter((coin) => {
@@ -17,7 +24,7 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
         })
         setSelectedCoin(...selectCoin)
         // finds index of selected coin from user's coin wallet to gain access to the amt they own
-        let targetCoin = userCoins.findIndex((coin) => coin.name === e.target.value);
+        let targetCoin = userData.coins.findIndex((coin) => coin.name === e.target.value);
         setCoinIndex(targetCoin);
         // clears amount to sell when coin changes
         resetAmt();
@@ -26,7 +33,7 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
     // when submits form to purchase, checks if amount is greater than 0 before committing to purchase
     function handleBuy() {
         if (selectedCoin !== "") {
-            (amt > 0 && purchaseCoin(amt, selectedCoin));
+            (amt > 0 && updateUserData("BUY", {amt, selectedCoin}));
         } else {
             alert("Please select a coin");
         }
@@ -34,7 +41,11 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
     }
 
     function handleSell() {
-        sellCoin(parseInt(amt), selectedCoin);
+        if (selectedCoin !== "") {
+            (amt > 0 && updateUserData("SELL", {amt, selectedCoin}))
+        } else {
+            alert("Please select a coin")
+        }
         resetAmt();
     }
 
@@ -44,9 +55,9 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
 
             <div className="BuySell-formInfo">
                 <div className="formImage">
-                    <img 
-                    src={(selectedCoin ? selectedCoin.image : cryptocurrency)} className={`Coin-bsImg ${!selectedCoin && 'BuySell-placeholderImg'}`}
-                    alt={selectedCoin ? selectedCoin.name : "cryptocurrency"} />
+                    <img
+                        src={(selectedCoin ? selectedCoin.image : cryptocurrency)} className={`Coin-bsImg ${!selectedCoin && 'BuySell-placeholderImg'}`}
+                        alt={selectedCoin ? selectedCoin.name : "cryptocurrency"} />
                 </div>
                 <span>Coin: <strong>{selectedCoin.name}</strong></span>
                 <span>Current Price: ${selectedCoin ? selectedCoin.current_price : "0.00"}</span>
@@ -62,8 +73,8 @@ export default function BuySell({ coins, userCoins, purchaseCoin, sellCoin }) {
                 <span>
                     <CoinPriceChange period="7d" priceChange={selectedCoin ? selectedCoin.price_change_percentage_7d_in_currency : 0} />
                 </span>
-                <span>Coins Owned: {userCoins[coinIndex] ? userCoins[coinIndex].amt.toFixed(5) : 0}</span>
-                <span>Coins Owned Value: {userCoins[coinIndex] ? (userCoins[coinIndex].amt * selectedCoin.current_price).toFixed(2) : "$0.00"}</span>
+                <span>Coins Owned: {userData.coins[coinIndex] ? userData.coins[coinIndex].amt.toFixed(5) : 0}</span>
+                <span>Coins Owned Value: {userData.coins[coinIndex] ? (userData.coins[coinIndex].amt * selectedCoin.current_price).toFixed(2) : "$0.00"}</span>
             </div>
             <form className="form">
                 <label className="sr-only">Coin:</label>

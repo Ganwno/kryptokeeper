@@ -2,24 +2,14 @@ import CoinList from './CoinList';
 import AccountInfo from './AccountInfo';
 import AboutApp from './AboutApp';
 
-export default function Home({ name, coins, coinsAmt, isLoggedIn, investment, userMoney, userCoins, addFunds }) {
+import { useUserData } from './ContextUserData';
+
+export default function Home() {
+    const userData = useUserData();
     return (
         <>
-            <CoinList coins={coins} />
-            {
-                (isLoggedIn ?
-                    <AccountInfo
-                        name={name}
-                        investment={investment}
-                        userMoney={userMoney}
-                        coinsAmt={coinsAmt}
-                        userCoins={userCoins}
-                        addFunds={addFunds}
-                    />
-                    :
-                    <AboutApp />
-                )
-            }
+            <CoinList />
+            {(userData.isLoggedIn ? <AccountInfo /> : <AboutApp />)}
         </>
     )
 }

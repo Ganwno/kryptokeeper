@@ -1,9 +1,12 @@
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 
+import { useCoinData } from './ContextCoinData';
+
 import Coin from './Coin';
 
-export default function CoinList({ coins }) {
+export default function CoinList() {
+    const coins = useCoinData();
     const responsive = {
         0: { items: 3 },
         600: { items: 4 },

@@ -2,12 +2,24 @@ import { ref, onValue } from 'firebase/database';
 import useInputState from '../hooks/useInputState';
 import { useNavigate } from 'react-router-dom';
 
-import BackButton from './BackButton';
+import { useUserData, useUpdateUserData } from './ContextUserData';
 
-export default function Login({ database, handleLogIn }) {
+import BackButton from './BackButton';
+import { useEffect } from 'react';
+
+export default function Login({ database }) {
     const [email, updateEmail, resetEmail] = useInputState('');
     const [password, updatePassword, resetPassword] = useInputState('');
     const navigate = useNavigate();
+
+    const userData = useUserData();
+    const updateUserData = useUpdateUserData();
+
+    useEffect(() => {
+        if (userData.isLoggedIn === true) {
+            navigate('/');
+        }
+    }, [userData, navigate])
 
     // creates a variable that makes reference to our db
     const dbRef = ref(database, "/users");
@@ -27,7 +39,7 @@ export default function Login({ database, handleLogIn }) {
             }
 
             if (newState.length > 0) {
-                handleLogIn(...newState)
+                updateUserData("LOGIN", newState)
             } else {
                 alert("Email and Password do not match");
             }

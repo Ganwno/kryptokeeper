@@ -1,11 +1,12 @@
 import { Navigate } from 'react-router-dom';
 import RegisterForm from './RegisterForm';
+import { useUserData } from './ContextUserData';
 
-export default function Register({ isLoggedIn, database }) {
-
+export default function Register({ database }) {
+    const userData = useUserData();
     return (
         <div className="posY">
-            {isLoggedIn ? (
+            {userData.isLoggedIn ? (
                 <Navigate to="/" />
             ) : (
                 <RegisterForm
