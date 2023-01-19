@@ -1,11 +1,12 @@
 // modules
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import firebaseConfig from '../firebase';
 import { getDatabase, ref, update } from 'firebase/database';
 import axios from 'axios';
 
 import { UserDataProvider } from './ContextUserData';
+import { CoinDataProvider } from './ContextCoinData';
 
 // components
 import Navbar from './Navbar';
@@ -21,8 +22,6 @@ import ErrorPage from './ErrorPage';
 export default function Kryptokeeper() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     // data regarding user's account
-
-
 
     const [name, setName] = useState();
     const [id, setId] = useState();
@@ -168,47 +167,49 @@ export default function Kryptokeeper() {
 
     return (
         <>
-            <UserDataProvider >
-                <Navbar isLoggedIn={isLoggedIn} />
-                <div className="App-body">
-                    <Routes>
-                        <Route path="/"
-                            element={<Home
-                                name={name}
-                                coins={coins}
-                                coinsAmt={coinsAmt}
-                                investment={investment}
-                                addFunds={addFunds}
-                                userMoney={userMoney}
-                                isLoggedIn={isLoggedIn}
-                            />}
-                        />
-                        <Route path="/login"
-                            element={<Login
-                                database={database}
-                            />}
-                        />
-                        <Route path="/logout" element={<Logout />} />
-                        <Route path="/register"
-                            element={<Register
-                                database={database}
-                                isLoggedIn={isLoggedIn}
-                            />}
-                        />
-                        <Route path="/portfolio"
-                            element={<Portfolio
-                                isLoggedIn={isLoggedIn}
-                                userMoney={userMoney}
-                                userCoins={userCoins}
-                                purchaseCoin={purchaseCoin}
-                                sellCoin={sellCoin}
-                                coins={coins}
-                            />}
-                        />
-                        <Route path="*" element={<ErrorPage />} />
-                    </Routes>
-                </div>
-            </UserDataProvider>
+            <CoinDataProvider>
+                <UserDataProvider >
+                    <Navbar />
+                    <div className="App-body">
+                        <Routes>
+                            <Route path="/"
+                                element={<Home
+                                    name={name}
+                                    coins={coins}
+                                    coinsAmt={coinsAmt}
+                                    investment={investment}
+                                    addFunds={addFunds}
+                                    userMoney={userMoney}
+                                    isLoggedIn={isLoggedIn}
+                                />}
+                            />
+                            <Route path="/login"
+                                element={<Login
+                                    database={database}
+                                />}
+                            />
+                            <Route path="/logout" element={<Logout />} />
+                            <Route path="/register"
+                                element={<Register
+                                    database={database}
+                                    isLoggedIn={isLoggedIn}
+                                />}
+                            />
+                            <Route path="/portfolio"
+                                element={<Portfolio
+                                    isLoggedIn={isLoggedIn}
+                                    userMoney={userMoney}
+                                    userCoins={userCoins}
+                                    purchaseCoin={purchaseCoin}
+                                    sellCoin={sellCoin}
+                                    coins={coins}
+                                />}
+                            />
+                            <Route path="*" element={<ErrorPage />} />
+                        </Routes>
+                    </div>
+                </UserDataProvider>
+            </CoinDataProvider>
             <Footer />
         </>
     );
