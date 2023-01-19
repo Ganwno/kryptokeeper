@@ -29,7 +29,7 @@ export function UserDataProvider({ children }) {
         if (userData.isLoggedIn) {
             const dbRef = ref(database, `users/${userData.id}`);
 
-            update(dbRef, { investmentAmount: userData.investment, cash: userData.money, coins: userData.coins })
+            update(dbRef, { investmentAmount: userData.investment, cash: parseInt(userData.money), coins: userData.coins })
         }
     }, [userData])
 
@@ -76,7 +76,7 @@ export function UserDataProvider({ children }) {
                             return coin;
                         }
                     })
-                    setUserData({ ...userData, coins: updatedCoins, money: userData.money - amt  })
+                    setUserData({ ...userData, coins: updatedCoins, money: userData.money - amt })
                 } else {
                     // creates the coin object (code + amount, determined by how much they purchased divided by the current market value)
                     const coinObject = {
@@ -94,14 +94,45 @@ export function UserDataProvider({ children }) {
                 alert(`You have purchased $${amt} of ${selectedCoin.name}`);
             }
         } else if (type === "SELL") {
+            const { amt, selectedCoin } = userInput;
+            let finalAmt = parseInt(amt);
+            //obtains index of coin fr user's coin array
+            const userCoinIndex = userData.coins.findIndex((coin) => coin.name === selectedCoin.name);
 
+            // checks to ensure the user has the necessary amount of coins to sell
+            if (amt > userData.coins[userCoinIndex].amt * selectedCoin.current_price) {
+                alert('You have insufficient coins to sell')
+            } else {
+                // determines the coin units based on the user sell price
+                const amtSoldCoin = amt / selectedCoin.current_price;
+                // if the remainder of stock would be less than $1, it will sell off the remaining stock to avoid unsellable amts
+
+                if ((userData.coins[userCoinIndex].amt - amtSoldCoin) * selectedCoin.current_price < 1) {
+                    finalAmt = userData.coins[userCoinIndex].amt * selectedCoin.current_price;
+                }
+
+                const updatedCoins = userData.coins.map((coin) => {
+                    if (coin.name === selectedCoin.name) {
+                        const newCoinObject = {
+                            name: coin.name,
+                            short: coin.short,
+                            image: coin.image,
+                            amt: (finalAmt === parseInt(amt) ? coin.amt - amtSoldCoin : 0)
+                        }
+                        return newCoinObject;
+                    } else {
+                        return coin;
+                    }
+                })
+                setUserData({ ...userData, coins: updatedCoins, money: userData.money + parseInt(finalAmt.toFixed(2)) })
+
+                alert(`You have sold $${finalAmt.toFixed(2)} of ${selectedCoin.name}`)
+            }
         } else if (type === "INVESTMENT") {
-            setUserData({...userData, money: userData.money + userInput, investment: userData.investment + userInput})
+            setUserData({ ...userData, money: userData.money + userInput, investment: userData.investment + userInput })
         } else {
             alert("INVALID TYPE");
         }
-
-
     }
     return (
         <UserDataContext.Provider value={userData}>

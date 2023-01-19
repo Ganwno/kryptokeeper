@@ -9,7 +9,7 @@ import BackButton from './BackButton';
 
 import cryptocurrency from '../assets/images/coin-generic.svg';
 
-export default function BuySell({ purchaseCoin, sellCoin }) {
+export default function BuySell() {
     const [selectedCoin, setSelectedCoin] = useState('');
     const [amt, updateAmt, resetAmt] = useInputState(0);
     const [coinIndex, setCoinIndex] = useState();
@@ -41,7 +41,11 @@ export default function BuySell({ purchaseCoin, sellCoin }) {
     }
 
     function handleSell() {
-        sellCoin(parseInt(amt), selectedCoin);
+        if (selectedCoin !== "") {
+            (amt > 0 && updateUserData("SELL", {amt, selectedCoin}))
+        } else {
+            alert("Please select a coin")
+        }
         resetAmt();
     }
 

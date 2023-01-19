@@ -20,7 +20,6 @@ export default function AddFundForm({ toggleAddFunds }) {
         }
     }
     return (
-        // when form is submitted, we prevent refreshing the page, call the addFunds function, then clear the form
         <>
             <form onSubmit={e => handleSubmit(e)} >
                 <input type="number" value={value} className="AddFund-input" onChange={handleChange} />

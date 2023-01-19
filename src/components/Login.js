@@ -7,7 +7,7 @@ import { useUserData, useUpdateUserData } from './ContextUserData';
 import BackButton from './BackButton';
 import { useEffect } from 'react';
 
-export default function Login({ database, handleLogIn }) {
+export default function Login({ database }) {
     const [email, updateEmail, resetEmail] = useInputState('');
     const [password, updatePassword, resetPassword] = useInputState('');
     const navigate = useNavigate();

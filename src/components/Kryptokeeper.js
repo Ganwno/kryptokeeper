@@ -1,5 +1,4 @@
 // modules
-import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import firebaseConfig from '../firebase';
 import { getDatabase } from 'firebase/database';
@@ -19,49 +18,7 @@ import ErrorPage from './ErrorPage';
 
 
 export default function Kryptokeeper() {
-    const [investment, setInvestment] = useState(0);
-    const [userMoney, setUserMoney] = useState(0);
-    const [userCoins, setUserCoins] = useState([]);
-
-    // data to populate information regarding various cryptocurrency
-    const [coins, setCoins] = useState([]);
-
     const database = getDatabase(firebaseConfig);
-
-    function sellCoin(sellAmt, soldCoin) {
-        console.log(sellAmt);
-        // obtains current price of the coin to be sold
-        const coinPrice = coins[coins.findIndex((coin => coin.name === soldCoin.name))].current_price;
-        // obtains index of coin in user's coin array
-        const userCoinIndex = userCoins.findIndex((coin) => coin.name === soldCoin.name);
-        // determines the coin units based on the user sell price
-        const amtSoldCoin = sellAmt / coinPrice;
-        // checks to ensure the user has the necessary amount of coins to sell
-        if (sellAmt > userCoins[userCoinIndex].amt * coinPrice) {
-            alert('You have insufficient coins to sell')
-        } else {
-            // updates the user's coin array, removing information if the user sold the entire stock of coin
-            if (userCoins[userCoinIndex].amt === amtSoldCoin) {
-                const updatedCoins = userCoins.filter((coin) => coin.name !== soldCoin.name)
-                setUserCoins(updatedCoins);
-            } else {
-                const updatedCoins = userCoins.map((coin) => {
-                    if (coin.name === soldCoin.name) {
-                        const newCoinObject = { name: coin.name, short: coin.short, image: coin.image, amt: (coin.amt - amtSoldCoin) }
-                        return newCoinObject;
-                    } else {
-                        return coin;
-                    }
-                })
-                setUserCoins(updatedCoins);
-            }
-            // updates user's cash
-            setUserMoney(userMoney + parseInt(sellAmt));
-            alert(`You have sold ${sellAmt} of ${soldCoin.name}`)
-        }
-    }
-
-
 
     return (
         <>
@@ -83,9 +40,7 @@ export default function Kryptokeeper() {
                                 />}
                             />
                             <Route path="/portfolio"
-                                element={<Portfolio
-                                    sellCoin={sellCoin}
-                                />}
+                                element={<Portfolio />}
                             />
                             <Route path="*" element={<ErrorPage />} />
                         </Routes>
