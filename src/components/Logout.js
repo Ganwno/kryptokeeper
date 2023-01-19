@@ -13,7 +13,7 @@ export default function Logout() {
             }
         }, 5000);
         updateUserData("LOGOUT");
-    }, [])
+    }, [navigate, updateUserData])
 
     return (
         <div className="posY">

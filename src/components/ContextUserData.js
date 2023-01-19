@@ -31,7 +31,7 @@ export function UserDataProvider({ children }) {
 
             update(dbRef, { investmentAmount: userData.investment, cash: parseInt(userData.money), coins: userData.coins })
         }
-    }, [userData])
+    }, [userData, database])
 
     function updateUserData(type, userInput) {
         // will rcv value + type to check what type of transaction and process accordingly, if no type creates alert

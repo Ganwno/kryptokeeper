@@ -19,7 +19,7 @@ export default function Login({ database }) {
         if (userData.isLoggedIn === true) {
             navigate('/');
         }
-    }, [userData])
+    }, [userData, navigate])
 
     // creates a variable that makes reference to our db
     const dbRef = ref(database, "/users");
