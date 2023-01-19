@@ -30,21 +30,12 @@ export default function BuySell() {
         resetAmt();
     }
 
-    // when submits form to purchase, checks if amount is greater than 0 before committing to purchase
-    function handleBuy() {
+    // when submit form for transaction, checks if amount is greater than 0 before committing
+    function handleClick(e) {
         if (selectedCoin !== "") {
-            (amt > 0 && updateUserData("BUY", {amt, selectedCoin}));
+            (amt > 0 && updateUserData(e.target.name, {amt, selectedCoin}));
         } else {
             alert("Please select a coin");
-        }
-        resetAmt();
-    }
-
-    function handleSell() {
-        if (selectedCoin !== "") {
-            (amt > 0 && updateUserData("SELL", {amt, selectedCoin}))
-        } else {
-            alert("Please select a coin")
         }
         resetAmt();
     }
@@ -90,8 +81,8 @@ export default function BuySell() {
                 <input type="number" name="bsAmount" className="BuySell-input" value={amt} onChange={updateAmt} min="1" required />
 
             </form>
-            <button onClick={() => handleBuy()} className="button BuySell-button bgAccent">Buy</button>
-            <button onClick={() => handleSell()} className="button BuySell-button bgAccent">Sell</button>
+            <button onClick={(e) => handleClick(e)} name="BUY" className="button BuySell-button bgAccent">Buy</button>
+            <button onClick={(e) => handleClick(e)} name="SELL" className="button BuySell-button bgAccent">Sell</button>
         </div>
     )
 }
