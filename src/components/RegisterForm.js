@@ -1,16 +1,17 @@
 import { ref, onValue, push } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
 import useInputState from '../hooks/useInputState';
-
+import { fetchDatabase } from '../utils/database';
 import BackButton from './BackButton';
 
-export default function RegisterForm({ database }) {
+export default function RegisterForm() {
     const [email, updateEmail, resetEmail] = useInputState('');
     const [password, updatePassword, resetPassword] = useInputState('');
     const [name, updateName, resetName] = useInputState('');
 
     const navigate = useNavigate();
 
+    const database = fetchDatabase();
     const dbRef = ref(database, "/users");
 
     function handleSubmit(e) {

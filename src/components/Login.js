@@ -3,14 +3,16 @@ import useInputState from '../hooks/useInputState';
 import { useNavigate } from 'react-router-dom';
 
 import { useUserData, useUpdateUserData } from './ContextUserData';
+import { fetchDatabase } from '../utils/database';
 
 import BackButton from './BackButton';
 import { useEffect } from 'react';
 
-export default function Login({ database }) {
+export default function Login() {
     const [email, updateEmail, resetEmail] = useInputState('');
     const [password, updatePassword, resetPassword] = useInputState('');
     const navigate = useNavigate();
+    const database = fetchDatabase();
 
     const userData = useUserData();
     const updateUserData = useUpdateUserData();

@@ -1,12 +1,8 @@
 // modules
 import { Routes, Route } from 'react-router-dom';
-import firebaseConfig from '../firebase';
-import { getDatabase } from 'firebase/database';
-
 import { UserDataProvider } from './ContextUserData';
 import { CoinDataProvider } from './ContextCoinData';
 
-// components
 import Navbar from './Navbar';
 import Home from './Home';
 import Login from './Login';
@@ -18,8 +14,6 @@ import ErrorPage from './ErrorPage';
 
 
 export default function Kryptokeeper() {
-    const database = getDatabase(firebaseConfig);
-
     return (
         <>
             <CoinDataProvider>
@@ -28,20 +22,10 @@ export default function Kryptokeeper() {
                     <div className="App-body">
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route path="/login"
-                                element={<Login
-                                    database={database}
-                                />}
-                            />
+                            <Route path="/login" element={<Login />} />
                             <Route path="/logout" element={<Logout />} />
-                            <Route path="/register"
-                                element={<Register
-                                    database={database}
-                                />}
-                            />
-                            <Route path="/portfolio"
-                                element={<Portfolio />}
-                            />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/portfolio" element={<Portfolio />} />
                             <Route path="*" element={<ErrorPage />} />
                         </Routes>
                     </div>
