@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import firebaseConfig from '../firebase';
 import { getDatabase } from 'firebase/database';
-import axios from 'axios';
 
 import { UserDataProvider } from './ContextUserData';
 import { CoinDataProvider } from './ContextCoinData';
@@ -23,7 +22,7 @@ export default function Kryptokeeper() {
     const [investment, setInvestment] = useState(0);
     const [userMoney, setUserMoney] = useState(0);
     const [userCoins, setUserCoins] = useState([]);
-    const [coinsAmt, setCoinsAmt] = useState(); // calculated value of user's coins based on current market value
+
     // data to populate information regarding various cryptocurrency
     const [coins, setCoins] = useState([]);
 
@@ -68,59 +67,7 @@ export default function Kryptokeeper() {
         }
     }
 
-    // this calculates user's net worth 
-    useEffect(() => {
-        if (userCoins.length > 0) {
-            const amounts = userCoins.map((coin) => {
-                const targetIndex = coins.findIndex((stockCoin) => stockCoin.name === coin.name)
-                return coin.amt * (targetIndex !== -1 ? coins[targetIndex].current_price : 0);
-            });
-            let total = 0;
-            for (let i = 0; i < amounts.length; i++) {
-                total = total + amounts[i];
-            }
-            setCoinsAmt(parseFloat(total.toFixed(2)));
-        } else {
-            setCoinsAmt(0);
-        }
-    }, [coins, userCoins]);
 
-
-
-    // on page load, grab crypto data from API
-    useEffect(() => {
-        const CancelToken = axios.CancelToken;
-        const source = CancelToken.source()
-
-        const getData = () => {
-            axios({
-                url: "https://api.coingecko.com/api/v3/coins/markets",
-                method: "get",
-                dataResponse: "json",
-                params: {
-                    vs_currency: "usd",
-                    per_page: 1000,
-                    price_change_percentage: "1h,24h,7d"
-                }
-            }, { cancelToken: source.token }).then((res) => {
-                setCoins(res.data);
-            }).catch((err) => {
-                if (axios.isCancel(err)) {
-                    console.log('Successfully Aborted');
-                } else {
-                    alert("Fetch Error", err);
-                }
-            });
-        }
-        // performs a refresh of coins & prices every 15s
-        const id = setInterval(getData, 15000)
-        // immediately invokes the fetch request on launch
-        getData();
-        return () => {
-            source.cancel();
-            clearInterval(id);
-        }
-    }, [])
 
     return (
         <>
@@ -131,7 +78,6 @@ export default function Kryptokeeper() {
                         <Routes>
                             <Route path="/"
                                 element={<Home
-                                    coinsAmt={coinsAmt}
                                     addFunds={addFunds}
                                 />}
                             />
