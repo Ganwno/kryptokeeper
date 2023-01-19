@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import firebaseConfig from '../firebase';
-import { getDatabase, ref, update } from 'firebase/database';
+import { getDatabase } from 'firebase/database';
 import axios from 'axios';
 
 import { UserDataProvider } from './ContextUserData';
@@ -20,11 +20,6 @@ import ErrorPage from './ErrorPage';
 
 
 export default function Kryptokeeper() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // data regarding user's account
-
-    const [name, setName] = useState();
-    const [id, setId] = useState();
     const [investment, setInvestment] = useState(0);
     const [userMoney, setUserMoney] = useState(0);
     const [userCoins, setUserCoins] = useState([]);
@@ -38,35 +33,6 @@ export default function Kryptokeeper() {
     function addFunds(addedAmt) {
         setUserMoney(parseInt(userMoney) + addedAmt);
         setInvestment(parseInt(investment) + addedAmt);
-    }
-
-    function purchaseCoin(purchaseAmt, purchasedCoin) {
-        if (purchaseAmt > userMoney) {
-            alert('Insufficient Funds');
-        } else {
-            // checks to see if the purchasedCoin already exists in user's coin wallet
-            if (userCoins.some(x => x.short === purchasedCoin.symbol)) {
-                const updatedCoins = userCoins.map((coin) => {
-                    if (coin.short === purchasedCoin.symbol) {
-                        const newCoinObject = { name: coin.name, short: coin.short, image: coin.image, amt: (coin.amt + (purchaseAmt / purchasedCoin.current_price)) }
-                        return newCoinObject;
-                    } else {
-                        return coin;
-                    }
-                })
-                setUserCoins(updatedCoins, console.log(userCoins))
-            } else {
-                // creates the coin object (code + amount, determined by how much they purchased divided by the current market value)
-                const coinObject = { name: purchasedCoin.name, short: purchasedCoin.symbol, image: purchasedCoin.image, amt: (purchaseAmt / purchasedCoin.current_price) }
-                // adds to new array which includes player's previous coins
-                const updatedCoins = [...userCoins, coinObject]
-                // updates player's coin wallet
-                setUserCoins(updatedCoins);
-            }
-            // removes money from user's wallet
-            setUserMoney(userMoney - purchaseAmt);
-            alert(`You have purchased $${purchaseAmt} of ${purchasedCoin.name}`);
-        }
     }
 
     function sellCoin(sellAmt, soldCoin) {
@@ -101,15 +67,6 @@ export default function Kryptokeeper() {
             alert(`You have sold ${sellAmt} of ${soldCoin.name}`)
         }
     }
-
-    // this saves user info to db every time a transaction is made (ie. coin bought/sold & investment increased)
-    useEffect(() => {
-        if (isLoggedIn) {
-            const dbRef = ref(database, `users/${id}`);
-
-            update(dbRef, { investmentAmount: investment, cash: userMoney, coins: userCoins })
-        }
-    }, [userMoney, investment, userCoins, database, id, isLoggedIn])
 
     // this calculates user's net worth 
     useEffect(() => {
@@ -174,13 +131,8 @@ export default function Kryptokeeper() {
                         <Routes>
                             <Route path="/"
                                 element={<Home
-                                    name={name}
-                                    coins={coins}
                                     coinsAmt={coinsAmt}
-                                    investment={investment}
                                     addFunds={addFunds}
-                                    userMoney={userMoney}
-                                    isLoggedIn={isLoggedIn}
                                 />}
                             />
                             <Route path="/login"
@@ -192,17 +144,11 @@ export default function Kryptokeeper() {
                             <Route path="/register"
                                 element={<Register
                                     database={database}
-                                    isLoggedIn={isLoggedIn}
                                 />}
                             />
                             <Route path="/portfolio"
                                 element={<Portfolio
-                                    isLoggedIn={isLoggedIn}
-                                    userMoney={userMoney}
-                                    userCoins={userCoins}
-                                    purchaseCoin={purchaseCoin}
                                     sellCoin={sellCoin}
-                                    coins={coins}
                                 />}
                             />
                             <Route path="*" element={<ErrorPage />} />

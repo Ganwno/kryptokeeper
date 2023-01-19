@@ -1,4 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import firebaseConfig from '../firebase';
+import { getDatabase, ref, update } from 'firebase/database';
 
 const UserDataContext = React.createContext();
 const UserDataUpdateContext = React.createContext();
@@ -12,6 +14,7 @@ export function useUpdateUserData() {
 }
 
 export function UserDataProvider({ children }) {
+    const database = getDatabase(firebaseConfig);
     const [userData, setUserData] = useState({
         name: '',
         id: '',
@@ -20,6 +23,15 @@ export function UserDataProvider({ children }) {
         coins: [],
         isLoggedIn: false
     });
+
+    // this saves user info to db every time a transaction is made (ie. coin bought/sold & investment increased)
+    useEffect(() => {
+        if (userData.isLoggedIn) {
+            const dbRef = ref(database, `users/${userData.id}`);
+
+            update(dbRef, { investmentAmount: userData.investment, cash: userData.money, coins: userData.coins })
+        }
+    }, [userData])
 
     function updateUserData(type, userInput) {
         // will rcv value + type to check what type of transaction and process accordingly, if no type creates alert
@@ -81,7 +93,6 @@ export function UserDataProvider({ children }) {
                 }
                 alert(`You have purchased $${amt} of ${selectedCoin.name}`);
             }
-
         } else if (type === "SELL") {
 
         } else if (type === "INVESTMENT") {
