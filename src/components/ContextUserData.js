@@ -24,12 +24,65 @@ export function UserDataProvider({ children }) {
     function updateUserData(type, userInput) {
         // will rcv value + type to check what type of transaction and process accordingly, if no type creates alert
         if (type === "LOGIN") {
-            const newUser = { name: userInput[1], id: userInput[0], investment: userInput[2], money: userInput[3], coins: userInput[4] ? userInput[4] : [], isLoggedIn: true }
+            const newUser = {
+                name: userInput[1],
+                id: userInput[0],
+                investment: userInput[2],
+                money: userInput[3],
+                coins: userInput[4] ? userInput[4] : [],
+                isLoggedIn: true
+            }
             setUserData(newUser);
         } else if (type === 'LOGOUT') {
-            const newUser = {name: '', id: '', investment: 0, money: 0, coins: [], isLoggedIn: false};
+            const newUser = {
+                name: '',
+                id: '',
+                investment: 0,
+                money: 0,
+                coins: [],
+                isLoggedIn: false
+            };
             setUserData(newUser);
-        } else if (type === "TRANSACTION") {
+        } else if (type === "BUY") {
+            const { amt, selectedCoin } = userInput;
+
+            if (amt * selectedCoin.current_price > userData.money) {
+                alert("Insufficient Funds");
+            } else {
+                // checks to see if the purchasedCoin already exists in user's coin wallet
+                if (userData.coins.some(x => x.short === selectedCoin.symbol)) {
+                    const updatedCoins = userData.coins.map((coin) => {
+                        if (coin.short === selectedCoin.symbol) {
+                            const newCoinObject = {
+                                name: coin.name,
+                                short: coin.short,
+                                image: coin.image,
+                                amt: (coin.amt + (amt / selectedCoin.current_price))
+                            }
+                            return newCoinObject;
+                        } else {
+                            return coin;
+                        }
+                    })
+                    setUserData({ ...userData, coins: updatedCoins, money: userData.money - amt  })
+                } else {
+                    // creates the coin object (code + amount, determined by how much they purchased divided by the current market value)
+                    const coinObject = {
+                        name: selectedCoin.name,
+                        short: selectedCoin.symbol,
+                        image: selectedCoin.image,
+                        amt: (amt / selectedCoin.current_price)
+                    }
+                    // adds to new array which includes player's previous coins
+                    const updatedCoins = [...userData.coins, coinObject]
+
+                    // updates player's coin wallet
+                    setUserData({ ...userData, coins: updatedCoins, money: userData.money - amt })
+                }
+                alert(`You have purchased $${amt} of ${selectedCoin.name}`);
+            }
+
+        } else if (type === "SELL") {
 
         } else if (type === "INVESTMENT") {
 
