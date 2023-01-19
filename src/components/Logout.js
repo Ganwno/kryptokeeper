@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUpdateUserData } from './ContextUserData';
 
-export default function Logout({ handleLogOut }) {
+export default function Logout() {
     const navigate = useNavigate();
-
+    const updateUserData = useUpdateUserData();
+    
     useEffect(() => {
         setTimeout(function () {
             if (window.location.pathname === "/logout") {
                 navigate('/')
             }
         }, 5000);
-        handleLogOut();
-    }, [handleLogOut, navigate])
+        updateUserData("LOGOUT");
+    }, [])
 
     return (
         <div className="posY">

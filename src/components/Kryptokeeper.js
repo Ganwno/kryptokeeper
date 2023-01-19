@@ -34,31 +34,6 @@ export default function Kryptokeeper() {
     const [coins, setCoins] = useState([]);
 
     const database = getDatabase(firebaseConfig);
-    const navigate = useNavigate();
-
-    // populates user information on log in and then redirects to home
-    function handleLogIn(userId, userName, userInvestment, userCash, userCoins) {
-        setIsLoggedIn(true)
-
-        setName(userName);
-        setId(userId);
-        setInvestment(userInvestment);
-        setUserCoins(userCoins);
-        setUserMoney(userCash);
-
-        navigate('/');
-    }
-
-    // clears all user information on logout and redirects to home
-    function handleLogOut() {
-        setIsLoggedIn(false);
-
-        setName('');
-        setId('');
-        setInvestment(0);
-        setUserCoins([]);
-        setUserMoney(0);
-    }
 
     // this function allows the user to add more money to their investment
     function addFunds(addedAmt) {
@@ -211,11 +186,9 @@ export default function Kryptokeeper() {
                         <Route path="/login"
                             element={<Login
                                 database={database}
-                                isLoggedIn={isLoggedIn}
-                                handleLogIn={handleLogIn}
                             />}
                         />
-                        <Route path="/logout" element={<Logout handleLogOut={handleLogOut} />} />
+                        <Route path="/logout" element={<Logout />} />
                         <Route path="/register"
                             element={<Register
                                 database={database}

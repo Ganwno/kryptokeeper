@@ -39,7 +39,7 @@ export default function Login({ database, handleLogIn }) {
             }
 
             if (newState.length > 0) {
-                updateUserData(newState, "LOGIN")
+                updateUserData("LOGIN", newState)
             } else {
                 alert("Email and Password do not match");
             }
