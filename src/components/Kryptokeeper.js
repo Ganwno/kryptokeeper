@@ -5,6 +5,8 @@ import firebaseConfig from '../firebase';
 import { getDatabase, ref, update } from 'firebase/database';
 import axios from 'axios';
 
+import { UserDataProvider } from './ContextUserData';
+
 // components
 import Navbar from './Navbar';
 import Home from './Home';
@@ -20,13 +22,7 @@ export default function Kryptokeeper() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     // data regarding user's account
 
-    const [userData, setUserData] = useState({
-        name: '',
-        id: '',
-        investment: 0,
-        money: 0,
-        coins: []
-    });
+
 
     const [name, setName] = useState();
     const [id, setId] = useState();
@@ -146,7 +142,7 @@ export default function Kryptokeeper() {
         if (userCoins.length > 0) {
             const amounts = userCoins.map((coin) => {
                 const targetIndex = coins.findIndex((stockCoin) => stockCoin.name === coin.name)
-                return coin.amt * ( targetIndex !== -1 ? coins[targetIndex].current_price : 0);
+                return coin.amt * (targetIndex !== -1 ? coins[targetIndex].current_price : 0);
             });
             let total = 0;
             for (let i = 0; i < amounts.length; i++) {
@@ -197,47 +193,49 @@ export default function Kryptokeeper() {
 
     return (
         <>
-            <Navbar isLoggedIn={isLoggedIn} />
-            <div className="App-body">
-                <Routes>
-                    <Route path="/"
-                        element={<Home
-                            name={name}
-                            coins={coins}
-                            coinsAmt={coinsAmt}
-                            investment={investment}
-                            addFunds={addFunds}
-                            userMoney={userMoney}
-                            isLoggedIn={isLoggedIn}
-                        />}
-                    />
-                    <Route path="/login"
-                        element={<Login
-                            database={database}
-                            isLoggedIn={isLoggedIn}
-                            handleLogIn={handleLogIn}
-                        />}
-                    />
-                    <Route path="/logout" element={<Logout handleLogOut={handleLogOut} />} />
-                    <Route path="/register"
-                        element={<Register
-                            database={database}
-                            isLoggedIn={isLoggedIn}
-                        />}
-                    />
-                    <Route path="/portfolio"
-                        element={<Portfolio
-                            isLoggedIn={isLoggedIn}
-                            userMoney={userMoney}
-                            userCoins={userCoins}
-                            purchaseCoin={purchaseCoin}
-                            sellCoin={sellCoin}
-                            coins={coins}
-                        />}
-                    />
-                    <Route path="*" element={<ErrorPage />} />
-                </Routes>
-            </div>
+            <UserDataProvider >
+                <Navbar isLoggedIn={isLoggedIn} />
+                <div className="App-body">
+                    <Routes>
+                        <Route path="/"
+                            element={<Home
+                                name={name}
+                                coins={coins}
+                                coinsAmt={coinsAmt}
+                                investment={investment}
+                                addFunds={addFunds}
+                                userMoney={userMoney}
+                                isLoggedIn={isLoggedIn}
+                            />}
+                        />
+                        <Route path="/login"
+                            element={<Login
+                                database={database}
+                                isLoggedIn={isLoggedIn}
+                                handleLogIn={handleLogIn}
+                            />}
+                        />
+                        <Route path="/logout" element={<Logout handleLogOut={handleLogOut} />} />
+                        <Route path="/register"
+                            element={<Register
+                                database={database}
+                                isLoggedIn={isLoggedIn}
+                            />}
+                        />
+                        <Route path="/portfolio"
+                            element={<Portfolio
+                                isLoggedIn={isLoggedIn}
+                                userMoney={userMoney}
+                                userCoins={userCoins}
+                                purchaseCoin={purchaseCoin}
+                                sellCoin={sellCoin}
+                                coins={coins}
+                            />}
+                        />
+                        <Route path="*" element={<ErrorPage />} />
+                    </Routes>
+                </div>
+            </UserDataProvider>
             <Footer />
         </>
     );
