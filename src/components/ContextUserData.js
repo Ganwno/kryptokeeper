@@ -96,7 +96,7 @@ export function UserDataProvider({ children }) {
         } else if (type === "SELL") {
 
         } else if (type === "INVESTMENT") {
-
+            setUserData({...userData, money: userData.money + userInput, investment: userData.investment + userInput})
         } else {
             alert("INVALID TYPE");
         }

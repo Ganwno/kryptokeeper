@@ -6,7 +6,7 @@ import useToggleState from '../hooks/useToggleState';
 import { useCoinData } from './ContextCoinData';
 import { useUserData } from './ContextUserData';
 
-export default function AccountInfo({ coinsAmt, addFunds }) {
+export default function AccountInfo() {
     const navigate = useNavigate();
     const coins = useCoinData();
     const userData = useUserData();
@@ -44,7 +44,7 @@ export default function AccountInfo({ coinsAmt, addFunds }) {
                     <span>Available Funds: ${userData.money}</span>
                 </li>
                 <li className="AccountInfo-item">
-                    <span>Coin Value: ${coinsAmt}</span>
+                    <span>Coin Value: ${gross}</span>
                 </li>
                 <li className="AccountInfo-item">
                     <span>Net Worth:</span>
@@ -55,7 +55,7 @@ export default function AccountInfo({ coinsAmt, addFunds }) {
             <button className="button AccountInfo-button" onClick={() => navigate('/portfolio')}>Trade</button>
             {
                 addingFunds ? (
-                    <AddFundForm addFunds={addFunds} toggleAddFunds={toggle} />
+                    <AddFundForm toggleAddFunds={toggle} />
                 ) : (
                     <>
                         <button className="button AccountInfo-button" onClick={() => toggle()}>Add funds</button>

@@ -1,5 +1,5 @@
 // modules
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import firebaseConfig from '../firebase';
 import { getDatabase } from 'firebase/database';
@@ -27,12 +27,6 @@ export default function Kryptokeeper() {
     const [coins, setCoins] = useState([]);
 
     const database = getDatabase(firebaseConfig);
-
-    // this function allows the user to add more money to their investment
-    function addFunds(addedAmt) {
-        setUserMoney(parseInt(userMoney) + addedAmt);
-        setInvestment(parseInt(investment) + addedAmt);
-    }
 
     function sellCoin(sellAmt, soldCoin) {
         console.log(sellAmt);
@@ -76,11 +70,7 @@ export default function Kryptokeeper() {
                     <Navbar />
                     <div className="App-body">
                         <Routes>
-                            <Route path="/"
-                                element={<Home
-                                    addFunds={addFunds}
-                                />}
-                            />
+                            <Route path="/" element={<Home />} />
                             <Route path="/login"
                                 element={<Login
                                     database={database}

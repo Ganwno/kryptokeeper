@@ -4,21 +4,12 @@ import AboutApp from './AboutApp';
 
 import { useUserData } from './ContextUserData';
 
-export default function Home({ addFunds }) {
+export default function Home() {
     const userData = useUserData();
-
     return (
         <>
             <CoinList />
-            {
-                (userData.isLoggedIn ?
-                    <AccountInfo
-                        addFunds={addFunds}
-                    />
-                    :
-                    <AboutApp />
-                )
-            }
+            {(userData.isLoggedIn ? <AccountInfo /> : <AboutApp />)}
         </>
     )
 }
