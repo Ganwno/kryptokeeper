@@ -19,6 +19,15 @@ import ErrorPage from './ErrorPage';
 export default function Kryptokeeper() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     // data regarding user's account
+
+    const [userData, setUserData] = useState({
+        name: '',
+        id: '',
+        investment: 0,
+        money: 0,
+        coins: []
+    });
+
     const [name, setName] = useState();
     const [id, setId] = useState();
     const [investment, setInvestment] = useState(0);
