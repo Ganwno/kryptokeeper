@@ -1,10 +1,10 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateUserData } from './ContextUserData';
 
 export default function Logout() {
     const navigate = useNavigate();
-    const logout = useCallback(() => {useUpdateUserData()});
+    const logout = useUpdateUserData();
     
     useEffect(() => {
         setTimeout(function () {
