@@ -26,7 +26,6 @@ export default function BuySell() {
         // finds index of selected coin from user's coin wallet to gain access to the amt they own
         let targetCoin = userData.coins.findIndex((coin) => coin.name === e.target.value);
         setCoinIndex(targetCoin);
-        // clears amount to sell when coin changes
         resetAmt();
     }
 

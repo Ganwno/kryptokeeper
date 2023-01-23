@@ -37,11 +37,11 @@ export function UserDataProvider({ children }) {
         // will rcv value + type to check what type of transaction and process accordingly, if no type creates alert
         if (type === "LOGIN") {
             const newUser = {
-                name: userInput[1],
-                id: userInput[0],
-                investment: userInput[2],
-                money: userInput[3],
-                coins: userInput[4] ? userInput[4] : [],
+                name: userInput.name,
+                id: userInput.id,
+                investment: userInput.investment,
+                money: userInput.money,
+                coins: userInput.coins,
                 isLoggedIn: true
             }
             setUserData(newUser);

@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateUserData } from './ContextUserData';
 
 export default function Logout() {
     const navigate = useNavigate();
-    const updateUserData = useUpdateUserData();
+    const logout = useCallback(() => {useUpdateUserData()});
     
     useEffect(() => {
         setTimeout(function () {
@@ -12,8 +12,8 @@ export default function Logout() {
                 navigate('/')
             }
         }, 5000);
-        updateUserData("LOGOUT");
-    }, [navigate, updateUserData])
+        logout("LOGOUT");
+    }, [navigate])
 
     return (
         <div className="posY">

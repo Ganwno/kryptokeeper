@@ -16,6 +16,7 @@ export default function Login() {
 
     const userData = useUserData();
     const updateUserData = useUpdateUserData();
+    const dbRef = ref(database, "/users");
 
     useEffect(() => {
         if (userData.isLoggedIn === true) {
@@ -23,24 +24,29 @@ export default function Login() {
         }
     }, [userData, navigate])
 
-    // creates a variable that makes reference to our db
-    const dbRef = ref(database, "/users");
-
     // takes user input for email and password, crossreferences them against all users in db, and logins/redirects if there is a match, else alerts user there is no match
     function handleSubmit(e) {
         e.preventDefault();
 
         onValue(dbRef, (response) => {
-            const newState = []
+            let newState = {};
 
             const data = response.val();
             for (let user in data) {
                 if (email.toLowerCase() === data[user].email && password === data[user].password) {
-                    newState.push(user, data[user].name, data[user].investmentAmount, data[user].cash, (data[user].coins ? data[user].coins : []));
+                    newState = {
+                        id: user,
+                        name: data[user].name,
+                        investment: data[user].investmentAmount,
+                        money: data[user].cash,
+                        coins: data[user].coins
+                    }
                 }
             }
 
-            if (newState.length > 0) {
+            console.log(newState)
+
+            if (newState.name.length > 0) {
                 updateUserData("LOGIN", newState)
             } else {
                 alert("Email and Password do not match");

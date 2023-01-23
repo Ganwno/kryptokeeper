@@ -4,7 +4,6 @@ import BuySell from './BuySell';
 
 export default function Portfolio() {
     const userData = useUserData();
-    // only renders if user is logged in
     return (
         <div className="posY">
             {
