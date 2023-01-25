@@ -44,8 +44,6 @@ export default function Login() {
                 }
             }
 
-            console.log(newState)
-
             if (newState.name.length > 0) {
                 updateUserData("LOGIN", newState)
             } else {
